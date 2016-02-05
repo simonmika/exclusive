@@ -38,7 +38,8 @@ module Exclusive {
 					toPrint = "";
 				for (var n = 0; i < DataStore.Users.length && n < 50; n++ , i++)
 					toPrint += DataStore.Users[i].ToJSON() + ",\n";
-				this.response.write(toPrint);
+				if (i != DataStore.Users.length)
+					this.response.write(toPrint);
 			}
 			if (toPrint != "[\n")
 				toPrint = toPrint.slice(0, -2);

@@ -18,6 +18,6 @@
 		"source/Server.ts",
 		"source/Service.ts",
 		"source/User.ts",
-		"source/exclusive.ts"
+		"source/Exclusive.ts"
 	]
 }
