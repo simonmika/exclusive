@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"module": "commonjs",
+		"noImplicitAny": true,
+		"removeComments": true,
+		"preserveConstEnums": true,
+		"out": "build/exclusive.js",
+		"sourceMap": true,
+		"sourceRoot": "../source"
+	},
+	"files": [
+		"source/Backend_User.ts",
+		"source/Connection.ts",
+		"source/DataStore.ts",
+		"source/HttpPath.ts",
+		"source/Log.ts",
+		"source/Server.ts",
+		"source/Service.ts",
+		"source/User.ts",
+		"source/exclusive.ts"
+	]
+}
