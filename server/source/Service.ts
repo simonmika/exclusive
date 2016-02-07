@@ -1,5 +1,3 @@
-/// <reference path="../../typings/node/node.d.ts" />
-
 module Exclusive {
 	export class Service {
 		private users: string;
@@ -52,11 +50,11 @@ module Exclusive {
 									if (!urlPath.Tail)
 										connection.Write(Service.ToJSON(DataStore.Content), 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 									else
-										connection.WriteFile(path.join(this.content, urlPath.Tail.Head));
+										connection.WriteFile(path.join(this.content, urlPath.Tail.ToString()));
 							}
 						});
 						break;
-					default:		
+					default:
 						switch (connection.Request.method) {
 							case "GET":
 								this.Get(connection, urlPath);
@@ -156,7 +154,7 @@ module Exclusive {
 
 					default:
 						if (user.CanRead(httpPath.Tail.Head))
-							connection.WriteFile(path.join(this.content, httpPath.Tail.Head), true, (statusCode: number) => {
+							connection.WriteFile(path.join(this.content, httpPath.Tail.ToString()), true, (statusCode: number) => {
 								user.AddLog(address, connection.Request.method, httpPath, statusCode, (appended: boolean, message: Log) => {
 									if (appended)
 										DataStore.UpdateUser(user.Name, message);

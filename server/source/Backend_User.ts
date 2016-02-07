@@ -1,5 +1,3 @@
-/// <reference path="../../typings/node/node.d.ts" />
-
 module Exclusive {
 	export class Backend_User {
 		private company: string;

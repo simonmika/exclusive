@@ -1,5 +1,3 @@
-/// <reference path="../../typings/node/node.d.ts" />
-
 module Exclusive {
 	export class Server {
 		private server: any;
@@ -23,8 +21,8 @@ module Exclusive {
 		}
 		private requestCallback(request: any, response: any) {
 			var parsedUrl = url.parse(request.url);
-			var urlPath = HttpPath.Build(parsedUrl.pathname);
-			var connection = new Connection(parsedUrl.href, request, response);
+			var urlPath = HttpPath.Build(parsedUrl.path);
+			var connection = new Connection(parsedUrl, request, response);
 			var service = new Service();
 			if (urlPath && urlPath.Head == "data")
 				service.Process(connection, urlPath.Tail);
