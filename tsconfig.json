@@ -10,7 +10,7 @@
 		"sourceRoot": "../server/source"
 	},
 	"files": [
-		"server/source/Backend_User.ts",
+		"server/source/BackendUser.ts",
 		"server/source/Connection.ts",
 		"server/source/DataStore.ts",
 		"server/source/HttpPath.ts",
