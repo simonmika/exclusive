@@ -1,4 +1,5 @@
 /// <reference path="../wappli/Browser.ts"/>
+/// <reference path="../wappli/Page.ts"/>
 
 module Imint.Exclusive.Client.UI {
 	export class ViewContent extends Wappli.Page {

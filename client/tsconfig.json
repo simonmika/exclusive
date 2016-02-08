@@ -7,7 +7,7 @@
 		"preserveConstEnums": true,
 		"out": "build/exclusive-client.js",
 		"sourceMap": true,
-		"sourceRoot": "../source"
+		"sourceRoot": "../client/source"
 	},
 	"files": [
 		"source/data/Backend.ts",
