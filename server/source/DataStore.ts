@@ -1,5 +1,3 @@
-/// <reference path="../../typings/node/node.d.ts" />
-
 module Exclusive {
 	/**Contains all data required for Exclusive. */
 	export module DataStore {

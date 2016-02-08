@@ -1,16 +1,18 @@
-/// <reference path="../../typings/node/node.d.ts" />
-
 module Exclusive {
 	export class Connection {
-		private url: string;
+		private parsedUrl: any;
+		private requestUrl: string;
+		private requestPath: string;
 		private request: any;
 		get Request() { return this.request; }
 		private response: any;
 		get Response() { return this.response; }
 		private authorisation: any;
 
-		constructor(url: string, request: any, response: any) {
-			this.url = url;
+		constructor(parsedUrl: any, request: any, response: any) {
+			this.parsedUrl = parsedUrl;
+			this.requestUrl = parsedUrl.href
+			this.requestPath = parsedUrl.path;
 			this.request = request;
 			this.response = response;
 			this.authorisation = request.headers["authorization"];
@@ -38,7 +40,8 @@ module Exclusive {
 					toPrint = "";
 				for (var n = 0; i < DataStore.Users.length && n < 50; n++ , i++)
 					toPrint += DataStore.Users[i].ToJSON() + ",\n";
-				this.response.write(toPrint);
+				if (i != DataStore.Users.length)
+					this.response.write(toPrint);
 			}
 			if (toPrint != "[\n")
 				toPrint = toPrint.slice(0, -2);
@@ -53,48 +56,63 @@ module Exclusive {
 		 * @param onCompleted The callback is passed one argument (statusCode), type of number that holds the proper status code for the response.
 		 */
 		public WriteFile(file: string, log?: boolean, onCompleted?: (statusCode: number) => void) {
-			if (this.url.substr(-1) == "/")
+			if (this.requestPath.substr(-1) == "/")
 				file = path.join(file, 'index.html');
 			fs.stat(file, (error: any, stats: any) => {
-				var statusCode: number;
-				var statusMessage: string;
-				if (error) {
-					if (log) {
-						statusCode = 301;
-						statusMessage = "Moved Permanently";
-
-					}
-					else {
-						statusCode = 404;
-						statusMessage = "Page Not Found";
-					}
-					this.Write(statusMessage, statusCode, { 'Content-Type': 'text/html;' });
+				if (stats.isDirectory()) {
+					this.Write("Redirecting", 301, { 'Location': this.requestUrl + "/" });
 					if (onCompleted)
-						onCompleted(statusCode);
+						onCompleted(301);
 				}
 				else {
-					if (stats.isDirectory())
-						this.Write("Redirecting", 301, { 'Location': this.url + "/" });
-					else {
-						var contentType = Connection.ContentType(file);
-						fs.readFile(file, 'utf-8', (error: any, data: string) => {
-							if (error) {
-								statusCode = 301;
-								statusMessage = "Moved Permanently";
+					fs.readFile(file, (error: any, data: any) => {
+						if (data) {
+							var contentType = Connection.ContentType(file);
+							if (stats.size) {
+								if ((this.request.headers['range']) && (this.request.headers.range.split('=')[0] == "bytes")) {
+									var positions = this.request.headers.range.replace(/bytes=/, "").split("-");
+									var start = parseInt(positions[0], 10);
+									var total = stats.size;
+									var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+									var chunksize = (end - start) + 1;
+									this.response.writeHead(206, { 'Content-Range': 'bytes' + start + "-" + end + "/" + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': contentType });
+									var stream = fs.createReadStream(file, { start: start, end: end })
+										.on("open", () => {
+											stream.pipe(this.response);
+										}).on("error", (err: any) => {
+											this.response.end(err);
+										});
+									if (onCompleted)
+										onCompleted(206);
+								}
+								else {
+									this.Write(data, 200, { 'Accept-Ranges': 'bytes', 'Content-Lenth': stats.size, 'Content-Type': contentType });
+									if (onCompleted)
+										onCompleted(200);
+								}
 							}
 							else {
-								statusCode = 200;
-								statusMessage = data;
+								this.Write(data, 200, { 'Content-Type': contentType });
+								if (onCompleted)
+									onCompleted(200);
 							}
-							this.Write(statusMessage, statusCode, { 'Content-Type': contentType })
-							if (onCompleted)
-								onCompleted(statusCode);
-						});
-					}
+						}
+						else {
+							if (log) {
+								this.Write("Moved Permanently", 301, { 'Content-Type': 'text/html' });
+								if (onCompleted)
+									onCompleted(301);
+							}
+							else {
+								this.Write("Not Found", 404, { 'Content-Type': 'text/html' });
+								if (onCompleted)
+									onCompleted(404);
+							}
+						}
+					});
 				}
 			});
 		}
-		
 		/**Receives data from a client in this connection and creates a type of User object according to the received data.
 		 * @param onCompleted the callback is passed one argument (result) type of User holds the created object of User.
 		*/
@@ -198,6 +216,9 @@ module Exclusive {
 				case ".html":
 					result = "text/html; charset=utf8";
 					break;
+				case ".txt":
+					result = "text/plain";
+					break;
 				case ".js":
 					result = "application/javascript";;
 					break;
@@ -207,37 +228,37 @@ module Exclusive {
 				case ".json":
 					result = "application/json; charset=UTF-8";
 					break;
-				case "css":
+				case ".css":
 					result = "text/css; charset=UTF-8";
 					break;
-				case "csv":
+				case ".csv":
 					result = "text/csv; charset=UTF-8";
 					break;
-				case "mp4":
+				case ".mp4":
 					result = "video/mp4";
 					break;
-				case "webm":
+				case ".webm":
 					result = "video/webm";
 					break;
-				case "png":
+				case ".png":
 					result = "image/png";
 					break;
-				case "jpg" || "jpeg":
+				case ".jpg" || "jpeg":
 					result = "image/jpeg";
 					break;
-				case "svg":
+				case ".svg":
 					result = "image/svg+xml";
 					break;
-				case "gif":
+				case ".gif":
 					result = "image/gif";
 					break;
-				case "pdf":
+				case ".pdf":
 					result = "application/pdf";
 					break;
-				case "xml":
+				case ".xml":
 					result = "application/xml";
 					break;
-				case "zip":
+				case ".zip":
 					result = "application/zip";
 					break;
 				default:
