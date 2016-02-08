@@ -1,6 +1,6 @@
 module Exclusive {
 	export class User {
-		private backend: Backend_User;
+		private backend: BackendUser;
 		private path: string;
 		get Path() { return this.path; }
 		set Path(value: string) { this.path = path.join(value, this.name); }
@@ -22,7 +22,7 @@ module Exclusive {
 		set Contents(value: string[]) { this.contents = value; }
 
 		constructor(company: string, contact: string, crm: string) {
-			this.backend = new Backend_User(company, contact, crm);
+			this.backend = new BackendUser(company, contact, crm);
 		}
 		/**Adds a new log of type Log to this user.
 		 * @param address Type of string of the IP address of this user.

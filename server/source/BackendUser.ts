@@ -1,5 +1,5 @@
 module Exclusive {
-	export class Backend_User {
+	export class BackendUser {
 		private company: string;
 		get Company() { return this.company; }
 		set Company(value: string) { this.company = value; }
