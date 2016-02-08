@@ -33,7 +33,7 @@ module Exclusive {
 				switch (urlPath.Head) {
 					case "app":
 						if (urlPath.Tail)
-							connection.WriteFile(path.join(this.app, urlPath.Tail.Head));
+							connection.WriteFile(path.join(this.app, urlPath.Tail.ToString()));
 						else
 							connection.WriteFile(this.app);
 						break;
