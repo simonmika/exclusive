@@ -103,9 +103,9 @@ module Exclusive {
 		 */
 		public Update(user: User) {
 			if (user) {
-				this.company = user.Company;
-				this.contact = user.Contact;
-				this.crm = user.Crm;
+				this.company = user.company;
+				this.contact = user.contact;
+				this.crm = user.crm;
 				this.contents = user.Contents;
 			}
 		}
@@ -123,9 +123,7 @@ module Exclusive {
 			}
 			return result;
 		}
-		/**Converts this user to JSON.
-		 * Returns a string implements JSON standard of this user.
-		 */
+		/**Returns a string implements JSON standard of this user. */
 		public ToJSON(): string {
 			var contents = "[";
 			this.contents.forEach(content => {
