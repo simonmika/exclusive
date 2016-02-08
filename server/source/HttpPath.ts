@@ -6,7 +6,7 @@ module Exclusive {
 		private tail: HttpPath;
 		get Tail() { return this.tail; }
 		set Tail(value: HttpPath) { this.tail = value; }
-		
+
 		constructor();
 		constructor(head: string, tail: HttpPath);
 		constructor(head?: string, tail?: HttpPath) {
@@ -14,10 +14,6 @@ module Exclusive {
 			(tail) ? this.tail = tail : this.tail = null;
 
 		}
-		/**Build an object of HttpPath depending of the given url.
-		 * Returns an an object of HttpPath.
-		 * @param url Type of string contains the url to have a similar HttpPath object.
-		 */
 		public static Build(url: string): HttpPath {
 			var result = new HttpPath();
 			var i: number;
@@ -35,9 +31,6 @@ module Exclusive {
 			}
 			return result;
 		}
-		/**Converts this HttpPath object to a string.
-		 * Returns a string as a URI for this path.
-		 */
 		public ToString(): string {
 			return (this.tail) ? this.head + "/" + this.tail.ToString() : this.head;
 		}

@@ -17,20 +17,11 @@ module Exclusive {
 			this.response = response;
 			this.authorisation = request.headers["authorization"];
 		}
-		/**Sends a response to the client.
-		 * Response.end() will be called automatically.
-		 * @param message Type of string the message to be sent.
-		 * @param statusCode Type of number status code for this response.
-		 * @param headers Type of any object to be sent along with response as a header.
-		 */
 		public Write(message: string, statusCode: number, headers: any) {
 			this.SetHeader(statusCode, headers);
 			this.response.write(message);
 			this.response.end();
 		}
-		/**Sends all users in Exclusive in a response to the client.
-		 * Sets the header of Content-Type as application/json.
-		 */
 		public WriteAllUsers() {
 			this.response.writeHead(200, "ok", { 'Content-Type': 'application/json' });
 			var i = 0;
@@ -49,12 +40,6 @@ module Exclusive {
 			this.response.write(toPrint);
 			this.response.end();
 		}
-		/**Sends a file to the client in the response.
-		 * Response.end() will be called automatically.
-		 * @param file Type of string name of the required file.
-		 * @param log Type of boolean determining if this method is being called when making a log for a user to response accordingly.
-		 * @param onCompleted The callback is passed one argument (statusCode), type of number that holds the proper status code for the response.
-		 */
 		public WriteFile(file: string, log?: boolean, onCompleted?: (statusCode: number) => void) {
 			if (this.requestPath.substr(-1) == "/")
 				file = path.join(file, 'index.html');
@@ -113,9 +98,6 @@ module Exclusive {
 				}
 			});
 		}
-		/**Receives data from a client in this connection and creates a type of User object according to the received data.
-		 * @param onCompleted the callback is passed one argument (result) type of User holds the created object of User.
-		*/
 		public Receive(onCompleted: (result: User) => void) {
 			var result: User = null;
 			this.ReceivingData((fullbody) => {
@@ -146,9 +128,6 @@ module Exclusive {
 					onCompleted(null);
 			});
 		}
-		/**Receives the data from the client.
-		 * @param callback the callback is passed one argument (result) type of string which holds the fullbody of the received data.
-		 */
 		private ReceivingData(callback: (result: string) => void) {
 			var fullBody: string = "";
 			this.request.on('data', (chunk: string) => {
@@ -158,10 +137,6 @@ module Exclusive {
 				callback(fullBody);
 			});
 		}
-		/**Authenticates the client credentials in this connection.
-		 * Sends an immediate response in case of a failure authentication.
-		 * @param onCompleted the callback is passed one argument (result) type of boolean which holds the result of the authentication.
-		 */
 		public Authenticate(onCompleted: (result: boolean) => void) {
 			if (!this.authorisation)
 				this.Write("Authorisation Required", 401, { 'WWW-Authenticate': 'Basic realm=\"imint.se\"' });
@@ -178,25 +153,13 @@ module Exclusive {
 				else this.Write("Basic Authorisation Required", 401, { 'WWW-Authenticate': 'Basic realm=\"imint.se\"' });
 			}
 		}
-		/**Checks if the type of the sent authorisation is basic
-		 * Returns an array of any. If the authorisation is basic a credentials will be return, otherwise it returns null.
-		*/
 		private IsBasicAuthorisation(): any[] {
 			var authorisation = this.authorisation.split(' ');
 			return (authorisation[0] == "Basic") ? [true, authorisation[1]] : [false, null];
 		}
-		/**Parses a basic authorisation.
-		 * Returns an array of strings contains the username and the password.
-		 * @param basicAuthorisation type of any the authorisation to be parsed.
-		 */
 		private ParseBasicAuthorisation(basicAuthorisation: any): string[] {
 			return (new Buffer(basicAuthorisation, 'base64')).toString().split(':');
 		}
-		/**Validates credentials at https://imint.highrisehq.com.
-		 * @param userName type of string username.
-		 * @param password type of string password.
-		 * @param callback the callback is passed on argument (result) type of boolean whicj holds the result of the validation.
-		 */
 		private ValidateCredential(userName: string, password: string, callback: (result: boolean) => void) {
 			var https = require('https');
 			https.get({ hostname: 'imint.highrisehq.com', path: '/me.xml', auth: userName + ':' + password }, (response: any) => {
@@ -206,10 +169,6 @@ module Exclusive {
 					callback(false);
 			});
 		}
-		/**Determines the proper content type for a file.
-		 * Returns type of string content type.
-		 * @param file Type of string name of the file. 
-		 */
 		private static ContentType(file: string): string {
 			var result: string;
 			switch (path.extname(file)) {
@@ -267,10 +226,6 @@ module Exclusive {
 			}
 			return result;
 		}
-		/**Sets the the status code, the status message according to the status code and the headers of this response.
-		 * @param statusCode Type of number status code for this response.
-		 * @param Type of any object to be sent along with response as a header.
-		 */
 		private SetHeader(statusCode: number, headers: any) {
 			var statusMessage: string;
 

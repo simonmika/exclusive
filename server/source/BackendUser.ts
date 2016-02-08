@@ -9,7 +9,6 @@ module Exclusive {
 			this.contact = contact;
 			this.crm = crm;
 		}
-		/**Returns a string implements JSON standard for this backend. */
 		protected ToJSON(): string {
 			return "{\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact + "\",\n\"crm\": \"" + this.crm + "\"\n}";
 		}

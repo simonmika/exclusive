@@ -12,10 +12,6 @@ module Exclusive {
 			this.content = path.join(Exclusive.DataPath, 'content');
 			this.app = Exclusive.AppPath;
 		}
-		/**Process the request sent from the client, and response accordingly.
-		 * @param connection Type of Connection to send the response.
-		 * @param httpPath Type of HttpPath the required path from the client.
-		 */
 		public Process(connection: Connection, urlPath: HttpPath) {
 			if (!urlPath || urlPath.Head.length <= 0) {
 				connection.Authenticate((authenticated: boolean) => {
@@ -62,10 +58,6 @@ module Exclusive {
 						break;
 				}
 		}
-		/**process the request related to the users (sending all users, creating new user, sending a specific user(or his folders or logs) or updating him).
-		  * @param connection Type of Connection to send the response.
-		 * @param httpPath Type of HttpPath the required path from the client.
-		 */
 		private ProcessUsers(connection: Connection, httpPath: HttpPath) {
 			if (!httpPath || httpPath.Head.length <= 0) {
 				switch (connection.Request.method) {
@@ -130,10 +122,6 @@ module Exclusive {
 					connection.Write("User Requested Not Found", 404, { 'Content-Type': 'text/html; charset=utf-8' });
 			}
 		}
-		/**Sends the required file to the client, and create a log about this client's activity.
-		 * @param connection Type of Connection to send the response.
-		 * @param httpPath Type of HttpPath the required path from the client.
-		 */
 		private Get(connection: Connection, httpPath: HttpPath) {
 			var user = DataStore.OpenUser(httpPath.Head);
 			if (user) {
@@ -172,10 +160,6 @@ module Exclusive {
 			else
 				connection.Write("User Not Found", 404, { 'Content-Type': 'text/html; charset=utf-8' })
 		}
-		/**Converts a given file to JSON.
-		 * Returns a string implements JSON standard for the given file.
-		 * @param file Array of any to be converted to JSON.
-		*/
 		public static ToJSON(file: any[]): string {
 			var result = "[\n";
 			if (file)
