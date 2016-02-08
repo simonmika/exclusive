@@ -92,15 +92,22 @@ module Exclusive {
 								}
 							}
 							else {
-								this.Write(data, 200, {'Content-Type': contentType });
+								this.Write(data, 200, { 'Content-Type': contentType });
 								if (onCompleted)
 									onCompleted(200);
 							}
 						}
 						else {
-							this.Write("Not Found", 404, { 'Content-Type': 'text/html' });
-							if (onCompleted)
-								onCompleted(404);
+							if (log) {
+								this.Write("Moved Permanently", 301, { 'Content-Type': 'text/html' });
+								if (onCompleted)
+									onCompleted(301);
+							}
+							else {
+								this.Write("Not Found", 404, { 'Content-Type': 'text/html' });
+								if (onCompleted)
+									onCompleted(404);
+							}
 						}
 					});
 				}
