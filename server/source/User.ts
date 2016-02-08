@@ -1,6 +1,5 @@
 module Exclusive {
-	export class User {
-		private backend: BackendUser;
+	export class User extends BackendUser {
 		private path: string;
 		get Path() { return this.path; }
 		set Path(value: string) { this.path = path.join(value, this.name); }
@@ -20,9 +19,13 @@ module Exclusive {
 		private contents: string[] = [];
 		get Contents() { return this.contents; }
 		set Contents(value: string[]) { this.contents = value; }
-
+		/**Creating a type of User object contains a type of BackendUser object holds a basic information.
+		 * @param company Type of string name of the company that the agent is working at.
+		 * @param contact Type of string the e-mail of the agent.
+		 * @param crm type of string the "CRM" of the agent.
+		 */
 		constructor(company: string, contact: string, crm: string) {
-			this.backend = new BackendUser(company, contact, crm);
+			super(company, contact, crm);
 		}
 		/**Adds a new log of type Log to this user.
 		 * @param address Type of string of the IP address of this user.
@@ -39,7 +42,6 @@ module Exclusive {
 				else
 					onCompleted(true, log);
 			});
-
 		}
 		/**Checks if this user has a folder in his contents.
 		 * Returns true if the folder's name is in this user's contents. 
@@ -87,7 +89,7 @@ module Exclusive {
 				if (error)
 					onCompleted(false);
 				else {
-					fs.writeFile(path.join(this.path, 'meta.json'), this.backend.ToJSON(), 'utf-8', (error: any) => {
+					fs.writeFile(path.join(this.path, 'meta.json'), super.ToJSON()/*this.backend.ToJSON()*/, 'utf-8', (error: any) => {
 						if (error)
 							onCompleted(false);
 						else
@@ -101,9 +103,9 @@ module Exclusive {
 		 */
 		public Update(user: User) {
 			if (user) {
-				this.backend.Company = user.backend.Company;
-				this.backend.Contact = user.backend.Contact;
-				this.backend.Crm = user.backend.Crm;
+				this.company = user.company;
+				this.contact = user.contact;
+				this.crm = user.crm;
 				this.contents = user.Contents;
 			}
 		}
@@ -121,9 +123,7 @@ module Exclusive {
 			}
 			return result;
 		}
-		/**Converts this user to JSON.
-		 * Returns a string implements JSON standard of this user.
-		 */
+		/**Returns a string implements JSON standard of this user. */
 		public ToJSON(): string {
 			var contents = "[";
 			this.contents.forEach(content => {
@@ -132,7 +132,7 @@ module Exclusive {
 			if (contents != "[")
 				contents = contents.slice(0, -1);
 			contents += "]";
-			return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.backend.Company + "\",\n\"contact\": \"" + this.backend.Contact + "\",\n\"crm\": \"" + this.backend.Crm +
+			return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact + "\",\n\"crm\": \"" + this.crm +
 				"\",\n\"url\": \"http://" + this.url + "\",\n\"logUrl\": \"http://" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"http://" + this.ContentsUrl + "\"\n}";
 		}
 	}
