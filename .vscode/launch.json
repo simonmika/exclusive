@@ -2,11 +2,11 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"preLaunchTask": "tsc",
+			"preLaunchTask": "build server",
 			"name": "Launch",
 			"type": "node",
 			"request": "launch",
-			"program": "build/exclusive.js",
+			"program": "${workspaceRoot}/build/exclusive.js",
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": ".",
@@ -18,8 +18,7 @@
 				"NODE_ENV": "development"
 			},
 			"externalConsole": false,
-			"sourceMaps": true,
-			"outDir": null
+			"sourceMaps": true
 		},
 		{
 			"name": "Attach",

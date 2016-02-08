@@ -12,7 +12,17 @@
 	"version": "0.1.0",
 	"command": "tsc",
 	"isShellCommand": true,
-	"showOutput": "silent",
-	"args": [],
-	"problemMatcher": "$tsc"
+	"showOutput": "always",
+	"tasks": [
+		{
+			"taskName": "build server",
+			"suppressTaskName": true,
+			"isBuildCommand": true,
+			"args": [
+				"-p",
+				"${workspaceRoot}/server"
+			],
+			"problemMatcher": "$tsc"
+		}
+	]
 }
