@@ -1,6 +1,7 @@
 /// <reference path="ViewContent.ts"/>
 /// <reference path="../wappli/ListItem.ts"/>
 /// <reference path="../wappli/List.ts"/>
+/// <reference path="../wappli/ResourcePage.ts"/>
 
 module Imint.Exclusive.Client.UI {
 	export class Content extends Wappli.ResourcePage<string[]> {
