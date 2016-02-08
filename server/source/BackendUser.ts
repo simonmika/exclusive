@@ -1,14 +1,11 @@
 module Exclusive {
 	export class BackendUser {
-		private company: string;
+		protected company: string;
 		get Company() { return this.company; }
-		set Company(value: string) { this.company = value; }
-		private contact: string;
+		protected contact: string;
 		get Contact() { return this.contact; }
-		set Contact(value: string) { this.contact = value; }
-		private crm: string;
+		protected crm: string;
 		get Crm() { return this.crm; }
-		set Crm(value: string) { this.crm = value; }
 
 		constructor(company: string, contact: string, crm: string){
 			this.company = company;
