@@ -69,7 +69,7 @@ module Exclusive {
 						if (data) {
 							var contentType = Connection.ContentType(file);
 							if (stats.size) {
-								if ((this.request.headers['range']) && (this.request.headers['range'] == "bytes=0-")) {
+								if ((this.request.headers['range']) && (this.request.headers.range.split('=')[0] == "bytes")) {
 									var positions = this.request.headers.range.replace(/bytes=/, "").split("-");
 									var start = parseInt(positions[0], 10);
 									var total = stats.size;
