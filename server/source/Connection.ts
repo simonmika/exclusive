@@ -170,188 +170,26 @@ module Exclusive {
 			});
 		}
 		private static ContentType(file: string): string {
-			var result: string;
-			switch (path.extname(file)) {
-				case ".html":
-					result = "text/html; charset=utf8";
-					break;
-				case ".txt":
-					result = "text/plain";
-					break;
-				case ".js":
-					result = "application/javascript";;
-					break;
-				case ".gif":
-					result = "image/gif";
-					break;
-				case ".json":
-					result = "application/json; charset=UTF-8";
-					break;
-				case ".css":
-					result = "text/css; charset=UTF-8";
-					break;
-				case ".csv":
-					result = "text/csv; charset=UTF-8";
-					break;
-				case ".mp4":
-					result = "video/mp4";
-					break;
-				case ".webm":
-					result = "video/webm";
-					break;
-				case ".png":
-					result = "image/png";
-					break;
-				case ".jpg" || "jpeg":
-					result = "image/jpeg";
-					break;
-				case ".svg":
-					result = "image/svg+xml";
-					break;
-				case ".gif":
-					result = "image/gif";
-					break;
-				case ".pdf":
-					result = "application/pdf";
-					break;
-				case ".xml":
-					result = "application/xml";
-					break;
-				case ".zip":
-					result = "application/zip";
-					break;
-				default:
-					result = null;
-					break;
-			}
-			return result;
+			var contentTypes: any  = {".html": "text/html; charset=utf8",
+				".txt": "text/plain",
+				".js": "application/javascript",
+				".gif": "image/gif",
+				".json": "application/json; charset=UTF-8",
+				".css": "text/css; charset=UTF-8",
+				".csv": "text/csv; charset=UTF-8",
+				".mp4": "video/mp4",
+				".webm": "video/webm",
+				".png": "image/png",
+				".jpg": "image/jpeg",
+				".jpeg": "image/jpeg",
+				".svg": "image/svg+xml",
+				".pdf": "application/pdf",
+				".xml": "application/xml",
+				".zip": "application/zip"};
+			return (path.extname(file) in contentTypes) ? contentTypes[path.extname(file)] : null;
 		}
 		private SetHeader(statusCode: number, headers: any) {
-			var statusMessage: string;
-
-			switch (statusCode) {
-				case 100:
-					statusMessage = "Continue";
-					break;
-				case 101:
-					statusMessage = "Switching Protocols";
-					break;
-				case 200:
-					statusMessage = "Ok";
-					break;
-				case 201:
-					statusMessage = "Created";
-					break;
-				case 202:
-					statusMessage = "Accepted";
-					break;
-				case 203:
-					statusMessage = "Non-Authorative Information";
-					break;
-				case 204:
-					statusMessage = "No Content";
-					break;
-				case 205:
-					statusMessage = "Reset Content";
-					break;
-				case 206:
-					statusMessage = "Partial Content";
-					break;
-				case 300:
-					statusMessage = "Multiple Choices";
-					break;
-				case 301:
-					statusMessage = "Moved Permanently";
-					break;
-				case 302:
-					statusMessage = "Found";
-					break;
-				case 303:
-					statusMessage = "See Other";
-					break;
-				case 304:
-					statusMessage = "Not Modified";
-					break;
-				case 305:
-					statusMessage = "Use Proxy";
-					break;
-				case 307:
-					statusMessage = "Temporary Redirect";
-					break;
-				case 400:
-					statusMessage = "Bad Request";
-					break;
-				case 401:
-					statusMessage = "Unauthorized";
-					break;
-				case 402:
-					statusMessage = "Payment Required";
-					break;
-				case 403:
-					statusMessage = "Forbidden";
-					break;
-				case 404:
-					statusMessage = "Not Found";
-					break;
-				case 405:
-					statusMessage = "Method Not Allowed";
-					break;
-				case 406:
-					statusMessage = "Not Acceptable";
-					break;
-				case 407:
-					statusMessage = "Proxy Authentication Required";
-					break;
-				case 408:
-					statusMessage = "Request Timeout";
-					break;
-				case 409:
-					statusMessage = "Conflict";
-					break;
-				case 410:
-					statusMessage = "Gone";
-					break;
-				case 411:
-					statusMessage = "Length Required";
-					break;
-				case 412:
-					statusMessage = "Precondition Failed";
-					break;
-				case 413:
-					statusMessage = "Request Entity Too Large";
-					break;
-				case 414:
-					statusMessage = "Request-URI Too Long";
-					break;
-				case 415:
-					statusMessage = "Unsupported Media Type";
-					break;
-				case 416:
-					statusMessage = "Requested Range Not Satifiable";
-					break;
-				case 417:
-					statusMessage = "Expectation Failed";
-					break;
-				case 500:
-					statusMessage = "Internal Server Error";
-					break;
-				case 501:
-					statusMessage = "Not Implemented";
-					break;
-				case 502:
-					statusMessage = "Bad Gateway";
-					break;
-				case 503:
-					statusMessage = "Service Unavailable";
-					break;
-				case 504:
-					statusMessage = "Gateway Timeout";
-					break;
-				case 505:
-					statusMessage = "Http Version Not Supported";
-					break;
-			}
-			this.response.writeHead(statusCode, statusMessage, headers);
+			this.response.writeHead(statusCode, http.STATUS_CODES[statusCode], headers);
 		}
 	}
 }
