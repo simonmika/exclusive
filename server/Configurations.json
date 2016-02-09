@@ -1,7 +1,0 @@
-{
-	"hostName": "localhost:8080",
-	"port": "8080",
-	"build": "build",
-	"authorisationServer": "imint.highrisehq.com",
-	"authorisationPath": "/me.xml"
-}
