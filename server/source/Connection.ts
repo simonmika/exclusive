@@ -18,7 +18,7 @@ module Exclusive {
 			this.authorisation = request.headers["authorization"];
 		}
 		public Write(message: string, statusCode: number, headers: any) {
-			this.SetHeader(statusCode, headers);
+			this.response.writeHead(statusCode, http.STATUS_CODES[statusCode], headers);
 			this.response.write(message);
 			this.response.end();
 		}
@@ -187,9 +187,6 @@ module Exclusive {
 				".xml": "application/xml",
 				".zip": "application/zip"};
 			return (path.extname(file) in contentTypes) ? contentTypes[path.extname(file)] : null;
-		}
-		private SetHeader(statusCode: number, headers: any) {
-			this.response.writeHead(statusCode, http.STATUS_CODES[statusCode], headers);
 		}
 	}
 }
