@@ -8,18 +8,18 @@ module Exclusive {
 		get App() { return this.app; }
 
 		constructor() {
-			this.users = path.join(Exclusive.DataPath, 'users');
-			this.content = path.join(Exclusive.DataPath, 'content');
-			this.app = Exclusive.AppPath;
+			this.users = path.join(ServerConfiguration.DataLocalPath, 'users');
+			this.content = path.join(ServerConfiguration.DataLocalPath, 'content');
+			this.app = ServerConfiguration.AppPath;
 		}
 		public Process(connection: Connection, urlPath: HttpPath) {
 			if (!urlPath || urlPath.Head.length <= 0) {
 				connection.Authenticate((authenticated: boolean) => {
 					if (authenticated) {
 						var contents = Service.ToJSON(DataStore.Content);
-						var toPrint = "{\n\"url\": \"http://" + Exclusive.HostName + "\",\n";
-						toPrint += "\"usersUrl\": \"http://" + path.join(Exclusive.HostName, 'users') + "\",\n";
-						toPrint += "\"contentUrl\": \"http://" + path.join(Exclusive.HostName, 'content') + "\",\n";
+						var toPrint = "{\n\"url\": \"http://" + ServerConfiguration.HostName + "\",\n";
+						toPrint += "\"usersUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
+						toPrint += "\"contentUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
 						toPrint += "\"content\": " + contents + "\n}";
 						connection.Write(toPrint, 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 					}
@@ -69,7 +69,7 @@ module Exclusive {
 							if (!newUser)
 								connection.Write("Bad Request", 400, { 'Content-Type': 'text/html; charset=utf-8' });
 							else {
-								newUser.Create(Exclusive.HostName, this.users, (created: boolean) => {
+								newUser.Create(ServerConfiguration.HostName + ":" + ServerConfiguration.Port.toString() , this.users, (created: boolean) => {
 									if (!created)
 										connection.Write("Internal Server Error", 500, { 'Content-Type': 'text/html; charset=utf-8' });
 									else

@@ -1,12 +1,12 @@
 module Exclusive {
-	export module DataStore {
+	 export module DataStore {
 		export var Users: User[] = [];
 		export var Content: string[] = [];
 		var usersPath: string;
 		var contentPath: string;
 		export function Initiate(): void {
-			usersPath = path.join(Exclusive.DataPath, 'users');
-			contentPath = path.join(Exclusive.DataPath, 'content');
+			usersPath = path.join(ServerConfiguration.DataLocalPath, 'users');
+			contentPath = path.join(ServerConfiguration.DataLocalPath, 'content');
 			LoadContent();
 			LoadUsers();
 			console.log("Data Loaded.");
@@ -48,7 +48,7 @@ module Exclusive {
 				var contents: string[] = fs.readFileSync(path.join(userFolder, '/content.csv'), "utf-8").split("\n");
 				user.Name = folder;
 				user.Path = usersPath;
-				user.Url = Exclusive.HostName;
+				user.Url = ServerConfiguration.HostName;
 				user.Contents = RemoveEmptyLines(contents);
 				if (fs.existsSync(path.join(userFolder, 'log.csv'))){
 					var logs: string[] = fs.readFileSync(path.join(userFolder, 'log.csv'), "utf-8").split("\n");

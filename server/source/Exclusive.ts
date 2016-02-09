@@ -1,20 +1,17 @@
 /// <reference path="../../typings/node/node.d.ts" />
+/// <reference path="ServerConfiguration.ts" />
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var url = require('url');
-
 module Exclusive {
-	export var HostName: string = "localhost:8080/data/";
-	export var DataPath: string = path.join(process.cwd(), 'build', 'data');
-	export var AppPath: string = path.join(process.cwd(), 'build');
-
 	export class Program {
 		private server: Server
 		constructor() {
 			this.registerKeyEvents();
+			ServerConfiguration.ReadServerConfigurations(path.join(process.cwd(), 'server', 'Configurations.json'));
 			DataStore.Initiate();
-			this.server = new Server(8080);
+			this.server = new Server(ServerConfiguration.Port);
 			this.server.start()
 		}
 

@@ -162,7 +162,7 @@ module Exclusive {
 		}
 		private ValidateCredential(userName: string, password: string, callback: (result: boolean) => void) {
 			var https = require('https');
-			https.get({ hostname: 'imint.highrisehq.com', path: '/me.xml', auth: userName + ':' + password }, (response: any) => {
+			https.get({ hostname: ServerConfiguration.AuthorisationServer, path: ServerConfiguration.AuthorisationPath, auth: userName + ':' + password }, (response: any) => {
 				if (response.statusCode == 200)
 					callback(true);
 				else

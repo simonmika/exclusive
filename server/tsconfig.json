@@ -18,6 +18,7 @@
 		"source/Server.ts",
 		"source/Service.ts",
 		"source/User.ts",
-		"source/Exclusive.ts"
+		"source/Exclusive.ts",
+		"source/ServerConfiguration.ts"
 	]
 }
