@@ -6,7 +6,6 @@ module Exclusive {
 		get Content() { return this.content; }
 		private app: string;
 		get App() { return this.app; }
-
 		constructor() {
 			this.users = path.join(ServerConfiguration.DataLocalPath, 'users');
 			this.content = path.join(ServerConfiguration.DataLocalPath, 'content');
@@ -17,7 +16,7 @@ module Exclusive {
 				connection.Authenticate((authenticated: boolean) => {
 					if (authenticated) {
 						var contents = Service.ToJSON(DataStore.Content);
-						var toPrint = "{\n\"url\": \"http://" + ServerConfiguration.HostName + "\",\n";
+						var toPrint = "{\n\"url\": \"http://" + path.join(ServerConfiguration.HostName, 'data') + "\",\n";
 						toPrint += "\"usersUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
 						toPrint += "\"contentUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
 						toPrint += "\"content\": " + contents + "\n}";
@@ -69,7 +68,7 @@ module Exclusive {
 							if (!newUser)
 								connection.Write("Bad Request", 400, { 'Content-Type': 'text/html; charset=utf-8' });
 							else {
-								newUser.Create(ServerConfiguration.HostName + ":" + ServerConfiguration.Port.toString() , this.users, (created: boolean) => {
+								newUser.Create(ServerConfiguration.HostName, this.users, (created: boolean) => {
 									if (!created)
 										connection.Write("Internal Server Error", 500, { 'Content-Type': 'text/html; charset=utf-8' });
 									else
@@ -142,7 +141,7 @@ module Exclusive {
 
 					default:
 						if (user.CanRead(httpPath.Tail.Head))
-							connection.WriteFile(path.join(this.content, httpPath.Tail.ToString()), true, (statusCode: number) => {
+							connection.WriteFile(this.content + "/" + httpPath.Tail.ToString(), true, (statusCode: number) => {
 								user.AddLog(address, connection.Request.method, httpPath, statusCode, (appended: boolean, message: Log) => {
 									if (appended)
 										DataStore.UpdateUser(user.Name, message);

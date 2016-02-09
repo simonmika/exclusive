@@ -14,7 +14,6 @@ module Exclusive {
 			this.server = new Server(ServerConfiguration.Port);
 			this.server.start()
 		}
-
 		registerKeyEvents() {
 			// CTRL+C
 			process.on("SIGINT", () => {

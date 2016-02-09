@@ -12,7 +12,6 @@ module Exclusive {
 		get StatusCode() { return this.statusCode; }
 		private statusMessage: string;
 		get StatusMessage() { return this.statusMessage; }
-
 		constructor(data: Date, ipAddress: string, method: string, requestedPath: HttpPath, statusCode: number) {
 			this.date = data;
 			this.ipAddress = ipAddress;

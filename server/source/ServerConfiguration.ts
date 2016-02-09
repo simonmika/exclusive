@@ -6,14 +6,13 @@ module Exclusive {
 		export var AppPath: string;
 		export var AuthorisationServer: string;
 		export var AuthorisationPath: string;
-
 		export function ReadServerConfigurations(configurationFile: string): void {
 			try {
 				var configuration = JSON.parse(fs.readFileSync(configurationFile, 'utf-8'));
 				ServerConfiguration.HostName = configuration.hostName;
 				ServerConfiguration.Port = configuration.port;
-				ServerConfiguration.DataLocalPath = configuration.dataLocalPath;
-				ServerConfiguration.AppPath = configuration.appPath;
+				ServerConfiguration.DataLocalPath = path.join(configuration.build, 'data');
+				ServerConfiguration.AppPath = configuration.build;
 				ServerConfiguration.AuthorisationServer = configuration.authorisationServer;
 				ServerConfiguration.AuthorisationPath = configuration.authorisationPath;
 			}

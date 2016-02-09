@@ -38,14 +38,13 @@ module Exclusive {
 		function LoadContent(): void {
 			Content = fs.readdirSync(contentPath);
 		}
-		/**Synchronously reads all users of Exclusive and adds them to DataStore.Users. */
 		function LoadUsers(): void {
 			var folders: string[] = fs.readdirSync(usersPath);
 			folders.forEach(folder => {
 				var userFolder = path.join(usersPath, folder);
 				var meta = JSON.parse(fs.readFileSync(path.join(userFolder, 'meta.json'), "utf-8"));
 				var user = new User((meta.company) || (meta.Company), (meta.contact) || (meta.Contact), (meta.crm) || (meta.Crm));
-				var contents: string[] = fs.readFileSync(path.join(userFolder, '/content.csv'), "utf-8").split("\n");
+				var contents: string[] = fs.readFileSync(path.join(userFolder, 'content.csv'), "utf-8").split("\n");
 				user.Name = folder;
 				user.Path = usersPath;
 				user.Url = ServerConfiguration.HostName;
@@ -70,7 +69,6 @@ module Exclusive {
 			} catch (exception) { }
 			return result;
 		}
-		/**Returns an array of strings of all users names.*/
 		export function AllUsers(): string[] {
 			var result: string[] = [];
 			Users.forEach(user => {

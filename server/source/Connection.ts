@@ -8,7 +8,6 @@ module Exclusive {
 		private response: any;
 		get Response() { return this.response; }
 		private authorisation: any;
-
 		constructor(parsedUrl: any, request: any, response: any) {
 			this.parsedUrl = parsedUrl;
 			this.requestUrl = parsedUrl.href

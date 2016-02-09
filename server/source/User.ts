@@ -8,7 +8,7 @@ module Exclusive {
 		set Name(value: string) { this.name = value; }
 		private url: string;
 		get Url() { return this.url; }
-		set Url(value: string) { this.url = path.join(value, 'users', this.name); }
+		set Url(value: string) { this.url = path.join(value, 'data', 'users', this.name); }
 		private logUrl: string;
 		get LogUrl() { return path.join(this.url, 'log'); }
 		private logs: Log[] = [];

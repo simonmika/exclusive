@@ -1,8 +1,0 @@
-{
-	"hostName": "localhost:8080",
-	"port": "8080",
-	"dataLocalPath": "./versioned/cogneco/exclusive/build/data",
-	"appPath": "./versioned/cogneco/exclusive/build",
-	"authorisationServer": "imint.highrisehq.com",
-	"authorisationPath": "/me.xml"
-}
