@@ -19,21 +19,9 @@ module Exclusive {
 		private contents: string[] = [];
 		get Contents() { return this.contents; }
 		set Contents(value: string[]) { this.contents = value; }
-		/**Creating a type of User object contains a type of BackendUser object holds a basic information.
-		 * @param company Type of string name of the company that the agent is working at.
-		 * @param contact Type of string the e-mail of the agent.
-		 * @param crm type of string the "CRM" of the agent.
-		 */
 		constructor(company: string, contact: string, crm: string) {
 			super(company, contact, crm);
 		}
-		/**Adds a new log of type Log to this user.
-		 * @param address Type of string of the IP address of this user.
-		 * @param method Type of string of the request's method used.
-		 * @param httpPath Type of HttpPath contains the path that this user was looking for.
-		 * @param statusCode Type of number of the status code of the respose for this user's request. 
-		 * @param onCompleted The callback is passed two arguments (result, log), where result is type of boolean and log type of log holds the new log added to this user.
-		 */
 		public AddLog(address: string, method: string, httpPath: HttpPath, statusCode: number, onCompleted: (result: boolean, log: Log) => void) {
 			var log = new Log(new Date(), address, method, httpPath, statusCode);
 			fs.appendFile(path.join(this.path, 'log.csv'), log.toString() + "\n", 'utf-8', (error: any) => {
@@ -43,18 +31,9 @@ module Exclusive {
 					onCompleted(true, log);
 			});
 		}
-		/**Checks if this user has a folder in his contents.
-		 * Returns true if the folder's name is in this user's contents. 
-		 * @param folder String of the name of the folder.
-		 */
 		public CanRead(folder: string): boolean {
 			return (this.contents.indexOf(folder) == -1) ? false : true;
 		}
-		/**Creats a new user by giving him a unique name, creating a new folder, saving an empty 'log.csv' file and adding him to DataStore.Users.
-		 * @param hostName Type of string of the host's name.
-		 * @param usersPath Type of string of the local path of users.
-		 * @param onCompleted The callback is passed one argument (result) type of boolean holds the result of creating the user.
-		 */
 		public Create(hostName: string, usersPath: string, onCompleted: (result: boolean) => void) {
 			this.name = User.GenerateName();
 			this.Url = hostName;
@@ -73,9 +52,6 @@ module Exclusive {
 				}
 			});
 		}
-		/**Saves the user's 'contents.csv' and 'meta.json' of this user to the hard disk.
-		 * @param onCompleted The callback is passed one argument (result) type of boolean holds the result of saving the two files.
-		 */
 		public Save(onCompleted: (result: boolean) => void) {
 			var contents: string[];
 			(this.contents) ? contents = this.contents : contents = [];
@@ -98,9 +74,6 @@ module Exclusive {
 				}
 			});
 		}
-		/**Updates this user's backend and contents.
-		 * @param user Type of User contains the new updates of this user.
-		 */
 		public Update(user: User) {
 			if (user) {
 				this.company = user.company;
@@ -109,9 +82,6 @@ module Exclusive {
 				this.contents = user.Contents;
 			}
 		}
-		/**Generates a unique name for a new user.
-		 * Returns a string of the new name. 
-		 */
 		private static GenerateName(): string {
 			var result = "";
 			var allUsers = DataStore.AllUsers();
@@ -123,7 +93,6 @@ module Exclusive {
 			}
 			return result;
 		}
-		/**Returns a string implements JSON standard of this user. */
 		public ToJSON(): string {
 			var contents = "[";
 			this.contents.forEach(content => {

@@ -21,9 +21,6 @@ module Exclusive {
 			this.statusCode = statusCode;
 			this.statusMessage = http.STATUS_CODES[statusCode];
 		}
-		/**Converts this log to a string.
-		 * Returns a string of this log as a string.
-		 */
 		public toString(): string {
 			return this.date.toLocaleString() + "," + this.ipAddress + "," + this.method + "," + this.requestedPath.ToString() + "," + this.statusCode.toString() + "," + this.statusMessage;
 		}
