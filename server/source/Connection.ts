@@ -44,9 +44,9 @@ module Exclusive {
 					file = path.join(file, 'index.html');
 			fs.stat(file, (error: any, stats: any) => {
 				if (error) {
-					this.Write("Moved Permanently", 301, { 'Content-Type': 'text/html' });
+					this.Write("", 404, { 'Content-Type': 'text/html' });
 					if (onCompleted)
-						onCompleted(301);
+						onCompleted(404);
 				}
 				else {
 				if (stats.isDirectory()) {
