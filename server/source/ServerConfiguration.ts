@@ -2,6 +2,7 @@ module Exclusive {
 	export module ServerConfiguration {
 		export var HostName: string;
 		export var Port: number;
+		export var Protocol: string;
 		export var DataLocalPath: string;
 		export var AppPath: string;
 		export var AuthorisationServer: string;
@@ -11,6 +12,7 @@ module Exclusive {
 				var configuration = JSON.parse(fs.readFileSync(path.join(configurationFile, 'server', 'Configurations.json'), 'utf-8'));
 				ServerConfiguration.HostName = configuration.hostName;
 				ServerConfiguration.Port = configuration.port;
+				ServerConfiguration.Protocol = configuration.protocol;
 				var absolutePath = path.resolve(configuration.build, '');
 				ServerConfiguration.DataLocalPath = path.join(absolutePath, 'data');
 				ServerConfiguration.AppPath = path.join(absolutePath, 'app');

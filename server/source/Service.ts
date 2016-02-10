@@ -16,9 +16,9 @@ module Exclusive {
 				connection.Authenticate((authenticated: boolean) => {
 					if (authenticated) {
 						var contents = Service.ToJSON(DataStore.Content);
-						var toPrint = "{\n\"url\": \"http://" + path.join(ServerConfiguration.HostName, 'data') + "\",\n";
-						toPrint += "\"usersUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
-						toPrint += "\"contentUrl\": \"http://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
+						var toPrint = "{\n\"url\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data') + "\",\n";
+						toPrint += "\"usersUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
+						toPrint += "\"contentUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
 						toPrint += "\"content\": " + contents + "\n}";
 						connection.Write(toPrint, 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 					}
