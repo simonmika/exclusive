@@ -41,8 +41,14 @@ module Exclusive {
 		}
 		public WriteFile(file: string, log?: boolean, onCompleted?: (statusCode: number) => void) {
 			if (this.requestPath.substr(-1) == "/")
-				file = path.join(file, 'index.html');
+					file = path.join(file, 'index.html');
 			fs.stat(file, (error: any, stats: any) => {
+				if (error) {
+					this.Write("", 404, { 'Content-Type': 'text/html' });
+					if (onCompleted)
+						onCompleted(404);
+				}
+				else {
 				if (stats.isDirectory()) {
 					this.Write("Redirecting", 301, { 'Location': this.requestUrl + "/" });
 					if (onCompleted)
@@ -94,6 +100,7 @@ module Exclusive {
 							}
 						}
 					});
+				}
 				}
 			});
 		}
