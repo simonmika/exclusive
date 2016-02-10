@@ -3,7 +3,6 @@ module Exclusive {
 		protected company: string;
 		protected contact: string;
 		protected crm: string;
-
 		constructor(company: string, contact: string, crm: string){
 			this.company = company;
 			this.contact = contact;

@@ -6,7 +6,6 @@ module Exclusive {
 		private tail: HttpPath;
 		get Tail() { return this.tail; }
 		set Tail(value: HttpPath) { this.tail = value; }
-
 		constructor();
 		constructor(head: string, tail: HttpPath);
 		constructor(head?: string, tail?: HttpPath) {
@@ -26,7 +25,7 @@ module Exclusive {
 				var urlTail = "";
 				for (i; i < url.length; i++)
 					urlTail += url[i];
-				if (urlTail.length > 1) //TO AVOID THE SCENARIO /SOME/THING/, CONSIDERING THE "/" AS A TAIL
+				if (urlTail.length > 1)
 					result.Tail = HttpPath.Build(urlTail);
 			}
 			return result;

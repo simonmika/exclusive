@@ -8,7 +8,6 @@ module Exclusive {
 		private response: any;
 		get Response() { return this.response; }
 		private authorisation: any;
-
 		constructor(parsedUrl: any, request: any, response: any) {
 			this.parsedUrl = parsedUrl;
 			this.requestUrl = parsedUrl.href
@@ -162,7 +161,7 @@ module Exclusive {
 		}
 		private ValidateCredential(userName: string, password: string, callback: (result: boolean) => void) {
 			var https = require('https');
-			https.get({ hostname: 'imint.highrisehq.com', path: '/me.xml', auth: userName + ':' + password }, (response: any) => {
+			https.get({ hostname: ServerConfiguration.AuthorisationServer, path: ServerConfiguration.AuthorisationPath, auth: userName + ':' + password }, (response: any) => {
 				if (response.statusCode == 200)
 					callback(true);
 				else

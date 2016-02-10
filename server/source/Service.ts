@@ -6,20 +6,19 @@ module Exclusive {
 		get Content() { return this.content; }
 		private app: string;
 		get App() { return this.app; }
-
 		constructor() {
-			this.users = path.join(Exclusive.DataPath, 'users');
-			this.content = path.join(Exclusive.DataPath, 'content');
-			this.app = Exclusive.AppPath;
+			this.users = path.join(ServerConfiguration.DataLocalPath, 'users');
+			this.content = path.join(ServerConfiguration.DataLocalPath, 'content');
+			this.app = ServerConfiguration.AppPath;
 		}
 		public Process(connection: Connection, urlPath: HttpPath) {
 			if (!urlPath || urlPath.Head.length <= 0) {
 				connection.Authenticate((authenticated: boolean) => {
 					if (authenticated) {
 						var contents = Service.ToJSON(DataStore.Content);
-						var toPrint = "{\n\"url\": \"http://" + Exclusive.HostName + "\",\n";
-						toPrint += "\"usersUrl\": \"http://" + path.join(Exclusive.HostName, 'users') + "\",\n";
-						toPrint += "\"contentUrl\": \"http://" + path.join(Exclusive.HostName, 'content') + "\",\n";
+						var toPrint = "{\n\"url\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data') + "\",\n";
+						toPrint += "\"usersUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
+						toPrint += "\"contentUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
 						toPrint += "\"content\": " + contents + "\n}";
 						connection.Write(toPrint, 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 					}
@@ -69,7 +68,7 @@ module Exclusive {
 							if (!newUser)
 								connection.Write("Bad Request", 400, { 'Content-Type': 'text/html; charset=utf-8' });
 							else {
-								newUser.Create(Exclusive.HostName, this.users, (created: boolean) => {
+								newUser.Create(ServerConfiguration.HostName, this.users, (created: boolean) => {
 									if (!created)
 										connection.Write("Internal Server Error", 500, { 'Content-Type': 'text/html; charset=utf-8' });
 									else
@@ -142,7 +141,7 @@ module Exclusive {
 
 					default:
 						if (user.CanRead(httpPath.Tail.Head))
-							connection.WriteFile(path.join(this.content, httpPath.Tail.ToString()), true, (statusCode: number) => {
+							connection.WriteFile(this.content + "/" + httpPath.Tail.ToString(), true, (statusCode: number) => {
 								user.AddLog(address, connection.Request.method, httpPath, statusCode, (appended: boolean, message: Log) => {
 									if (appended)
 										DataStore.UpdateUser(user.Name, message);
