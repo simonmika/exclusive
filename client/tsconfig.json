@@ -5,7 +5,7 @@
 		"noImplicitAny": true,
 		"removeComments": true,
 		"preserveConstEnums": true,
-		"out": "build/exclusive-client.js",
+		"out": "build/app/exclusive-client.js",
 		"sourceMap": true,
 		"sourceRoot": "../client/source"
 	},
