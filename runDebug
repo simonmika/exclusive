@@ -1,5 +1,7 @@
 #!/bin/bash
 tsc -p client
 cp client/index.html build/app/
+mkdir build/app/client
+cp -r client/source build/app/client/source
 tsc -p server
 node build/exclusive.js
