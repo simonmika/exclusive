@@ -6,21 +6,18 @@ module Wappli{
 		get Server(): string { return this.server; }
 		set Server(value: string) {
 			this.server = value;
-			this.SaveSettings();
 		}
 		private user: string;
 		get User(): string { return this.user; }
 		set User(value: string) {
 			this.user = value;
 			this.UpdateAuthorization();
-			this.SaveSettings();
 		}
 		private password: string;
 		get Password(): string { return this.password; }
 		set Password(value: string) {
 			this.password = value;
 			this.UpdateAuthorization();
-			this.SaveSettings();
 		}
 		private authorization: string;
 		constructor(private name: string, private changed: () => void) {
@@ -41,7 +38,7 @@ module Wappli{
 			this.UpdateAuthorization();
 			this.changed();
 		}
-		private SaveSettings() {
+		public SaveSettings() {
 			var settings = { server: this.server, user: this.user, password: this.password };
 			localStorage.setItem(this.name + ".settings", JSON.stringify(settings));
 			this.changed();
