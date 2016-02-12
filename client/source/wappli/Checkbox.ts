@@ -40,7 +40,7 @@ module Wappli{
 				this.labels.push(label);
 				var input: HTMLInputElement = document.createElement("input");
 				input.name = value;
-				input.id = identifier;
+				input.id = value;
 				input.value = value;
 				input.type = "checkbox";
 				if (setValues !== null)
