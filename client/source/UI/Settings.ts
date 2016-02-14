@@ -10,7 +10,11 @@ module Imint.Exclusive.Client.UI {
 			this.Append(new Wappli.Field("password", "password", "Password", () => this.service.Password, value => this.service.Password = value));
 			this.Append(new Wappli.Button("Log in", () => {
 				this.service.SaveSettings();
-				$.mobile.changePage(this.service.Server + "/app/", "slide");
+				this.service.Get(this.service.Server + "/app/", () => {
+					var root = new Imint.Exclusive.Client.UI.Root(new Imint.Exclusive.Client.Data.Backend());
+					root.Initialize();
+					$.mobile.changePage(this.service.Server + "/app/", "slide");
+				});
 			}));
 			this.Append(new Wappli.Button("Cancel", () => {
 				$.mobile.changePage(this.service.Server + "/app/", "slide");
