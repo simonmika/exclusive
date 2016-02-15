@@ -23,7 +23,7 @@ module Imint.Exclusive.Client.UI {
 						this.backend.Users.Current.Set(user);
 						this.childPage.Show();
 					})) : null;
-			}));
+			}, false, "users"));
 		}
 	}
 }
