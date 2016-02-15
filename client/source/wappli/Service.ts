@@ -41,7 +41,7 @@ module Wappli{
 		public SaveSettings() {
 			var settings = { server: this.server, user: this.user, password: this.password };
 			localStorage.setItem(this.name + ".settings", JSON.stringify(settings));
-			this.changed();
+			this.LoadSettings();
 		}
 		private UpdateAuthorization() {
 			this.authorization = "Basic " + btoa(this.user + ":" + this.password);
