@@ -16,7 +16,7 @@ module Imint.Exclusive.Client.UI {
 				new Wappli.ListItem(folder, () => {
                     this.viewContentPage.Folder = folder;
                     this.viewContentPage.Show();
-				}))));
+				})), false, "content"));
 		}
 	}
 }
