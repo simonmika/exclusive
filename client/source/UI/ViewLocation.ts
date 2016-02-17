@@ -8,7 +8,7 @@ module Imint.Exclusive.Client.UI {
 			this.Title = "Location";
 		}
 		Setup() {
-			this.Append(new Wappli.Browser(() => "http://geomaplookup.net/?iphone=true&ip=" + this.Address));
+			this.Append(new Wappli.Browser(() => "https://db-ib.com/" + this.Address));
 		}
 	}
 }
