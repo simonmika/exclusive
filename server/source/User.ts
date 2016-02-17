@@ -23,7 +23,8 @@ module Exclusive {
 			super(company, contact, crm);
 		}
 		public AddLog(address: string, method: string, httpPath: HttpPath, statusCode: number, onCompleted: (result: boolean, log: Log) => void) {
-			var log = new Log(new Date(), address, method, httpPath, statusCode);
+			var ipv4 = address.split(':');
+			var log = new Log(new Date(), ipv4[ipv4.length - 1], method, httpPath, statusCode);
 			fs.appendFile(path.join(this.path, 'log.csv'), log.toString() + "\n", 'utf-8', (error: any) => {
 				if (error)
 					onCompleted(false, null);
