@@ -47,19 +47,23 @@ module Wappli{
 			this.authorization = "Basic " + btoa(this.user + ":" + this.password);
 		}
 		Get<T>(url: string, success: (data: T) => void) {
+			$.mobile.loading("show");
 			$.ajax({
 				url: url,
 				dataType: "json",
 				beforeSend: header => header.setRequestHeader("Authorization", this.authorization),
 				success: (data: T) => {
+					$.mobile.loading("hide");
 					success(data);
 				},
 				error: () => {
+					$.mobile.loading("hide");
 					success(null);
 				}
 			});
 		}
 		Post<T>(url: string, data: T, done: (data: T) => void = null) {
+			$.mobile.loading("show");
 			$.ajax({
 				type: "POST",
 				url: url,
@@ -67,11 +71,18 @@ module Wappli{
 				dataType: "json",
 				contentType: "application/json; charset=utf-8",
 				beforeSend: header => header.setRequestHeader("Authorization", this.authorization),
-				success: (data: T) => { done(data); },
-				error: () => { done(null); }
+				success: (data: T) => {
+					$.mobile.loading("hide");
+					done(data);
+				},
+				error: () => {
+					$.mobile.loading("hide");
+					done(null);
+				}
 			});
 		}
 		Put<T>(url: string, data: T, done: (data: T) => void = null) {
+			$.mobile.loading("show");
 			$.ajax({
 				type: "PUT",
 				url: url,
@@ -79,8 +90,14 @@ module Wappli{
 				dataType: "json",
 				contentType: "application/json; charset=utf-8",
 				beforeSend: header => header.setRequestHeader("Authorization", this.authorization),
-				success: (data: T) => { done(data); },
-				error: () => { done(null); }
+				success: (data: T) => {
+					$.mobile.loading("hide");
+					done(data);
+				},
+				error: () => {
+					$.mobile.loading("hide");
+					done(null);
+				}
 			});
 		}
     }
