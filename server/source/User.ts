@@ -31,6 +31,8 @@ module Exclusive {
 				else
 					onCompleted(true, log);
 			});
+			if (httpPath.Tail.Tail == null)
+				fs.appendFile(path.join(ServerConfiguration.DataLocalPath, 'global_log.csv'), log.toString() + "\n", 'utf-8', (error: any) => {});
 		}
 		public CanRead(folder: string): boolean {
 			return (this.contents.indexOf(folder) == -1) ? false : true;
