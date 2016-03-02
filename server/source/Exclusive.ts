@@ -9,7 +9,7 @@ module Exclusive {
 		private server: Server
 		constructor() {
 			this.registerKeyEvents();
-			ServerConfiguration.ReadServerConfigurations(process.cwd());
+			ServerConfiguration.ReadServerConfigurations();
 			DataStore.Initiate();
 			this.server = new Server(ServerConfiguration.Port);
 			this.server.start()
