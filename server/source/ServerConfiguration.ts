@@ -13,8 +13,8 @@ module Exclusive {
 				ServerConfiguration.HostName = configuration.hostName;
 				ServerConfiguration.Port = configuration.port;
 				ServerConfiguration.Protocol = configuration.protocol;
+				ServerConfiguration.DataLocalPath = path.resolve(configuration.data, '');
 				var absolutePath = path.resolve(configuration.build, '');
-				ServerConfiguration.DataLocalPath = path.join(absolutePath, 'data');
 				ServerConfiguration.AppPath = path.join(absolutePath, 'app');
 				ServerConfiguration.AuthorisationServer = configuration.authorisationServer;
 				ServerConfiguration.AuthorisationPath = configuration.authorisationPath;
