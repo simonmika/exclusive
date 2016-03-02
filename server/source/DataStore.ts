@@ -43,7 +43,7 @@ module Exclusive {
 			folders.forEach(folder => {
 				var userFolder = path.join(usersPath, folder);
 				var meta = JSON.parse(fs.readFileSync(path.join(userFolder, 'meta.json'), "utf-8"));
-				var user = new User((meta.company) || (meta.Company), (meta.contact) || (meta.Contact), (meta.crm) || (meta.Crm));
+				var user = new User((meta.company) || (meta.Company), (meta.contact) || (meta.Contact));
 				var contents: string[] = fs.readFileSync(path.join(userFolder, 'content.csv'), "utf-8").split("\n");
 				user.Name = folder;
 				user.Path = usersPath;

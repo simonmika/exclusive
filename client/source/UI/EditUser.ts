@@ -17,7 +17,6 @@ module Imint.Exclusive.Client.UI {
 				this.Append(new Wappli.Field("name", "text", "Name", () => this.Value !== undefined ? this.Value.name : ""));
 				this.Append(new Wappli.Field("company", "text", "Company", () => this.Value !== undefined ? this.Value.company : "", value => this.Value.company = value));
 				this.Append(new Wappli.Field("contact", "text", "Contact", () => this.Value !== undefined ? this.Value.contact : "", value => this.Value.contact = value));
-				this.Append(new Wappli.Field("crm", "text", "CRM", () => this.Value !== undefined ? this.Value.crm : "https://imint.highrisehq.com/people/", value => this.Value.crm = value));
                 this.Append(new Wappli.Checkbox("content", "Content", content, () => this.Value !== undefined ? this.Value.folders : new Array<string>(), (values: string[]) => this.Value.folders = values));
 				this.Append(new Wappli.Button("save", () => {
 					this.Resource.Save(succeeded => {

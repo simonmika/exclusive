@@ -19,8 +19,8 @@ module Exclusive {
 		private contents: string[] = [];
 		get Contents() { return this.contents; }
 		set Contents(value: string[]) { this.contents = value; }
-		constructor(company: string, contact: string, crm: string) {
-			super(company, contact, crm);
+		constructor(company: string, contact: string) {
+			super(company, contact);
 		}
 		public AddLog(address: string, method: string, httpPath: HttpPath, statusCode: number, onCompleted: (result: boolean, log: Log) => void) {
 			var ipv4 = address.split(':');
@@ -81,7 +81,6 @@ module Exclusive {
 			if (user) {
 				this.company = user.company;
 				this.contact = user.contact;
-				this.crm = user.crm;
 				this.contents = user.Contents;
 			}
 		}
@@ -104,7 +103,7 @@ module Exclusive {
 			if (contents != "[")
 				contents = contents.slice(0, -1);
 			contents += "]";
-			return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact + "\",\n\"crm\": \"" + this.crm +
+			return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact +
 				"\",\n\"url\": \"http://" + this.url + "\",\n\"logUrl\": \"http://" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"http://" + this.ContentsUrl + "\"\n}";
 		}
 	}
