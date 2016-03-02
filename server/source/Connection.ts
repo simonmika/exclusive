@@ -110,14 +110,12 @@ module Exclusive {
 				if (fullbody) {
 					var contents: string[] = [];
 					var jsonUser = JSON.parse(fullbody);
-					if ((jsonUser.company || jsonUser.Company) && (jsonUser.contact || jsonUser.Contact) && (jsonUser.crm || jsonUser.Crm)) {
+					if ((jsonUser.company || jsonUser.Company) && (jsonUser.contact || jsonUser.Contact)) {
 						var theCompany: any;
 						var theContact: any;
-						var theCrm: any;
 						(jsonUser.company) ? theCompany = jsonUser.company : theCompany = jsonUser.Company;
 						(jsonUser.contact) ? theContact = jsonUser.contact : theContact = jsonUser.Contact;
-						(jsonUser.crm) ? theCrm = jsonUser.crm : theCrm = jsonUser.Crm;
-						result = new User(theCompany, theContact, theCrm);
+						result = new User(theCompany, theContact);
 						if ((jsonUser.folders) || (jsonUser.Folders)) {
 							var theFolders: any;
 							(jsonUser.folders) ? theFolders = jsonUser.folders : theFolders = jsonUser.Folders;

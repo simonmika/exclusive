@@ -14,7 +14,6 @@ module Imint.Exclusive.Client.UI {
 			this.backend.Content.Get(content => {
 				this.Append(new Wappli.Field("company", "text", "Company", () => "", value => this.Data.company = value));
 				this.Append(new Wappli.Field("contact", "text", "Contact", () => " <@>", value => this.Data.contact = value));
-				this.Append(new Wappli.Field("crm", "text", "CRM", () => "https://imint.highrisehq.com/people/", value => this.Data.crm = value));
                 this.Append(new Wappli.Checkbox("content", "Content", content, null, (values: string[]) => this.Data.folders = values));
 				this.Append(new Wappli.Button("create", () => {
 					this.backend.Users.Create(this.Data, succeeded => {
