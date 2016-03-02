@@ -36,7 +36,9 @@ module Exclusive {
 			return result;
 		}
 		function LoadContent(): void {
-			Content = fs.readdirSync(contentPath);
+			Content = fs.readdirSync(contentPath).filter((folderName: string) => {
+				return folderName[0] != ".";
+			});
 		}
 		function LoadUsers(): void {
 			var folders: string[] = fs.readdirSync(usersPath);
