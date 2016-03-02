@@ -7,9 +7,9 @@ module Exclusive {
 		export var AppPath: string;
 		export var AuthorisationServer: string;
 		export var AuthorisationPath: string;
-		export function ReadServerConfigurations(configurationFile: string): void {
+		export function ReadServerConfigurations(): void {
 			try {
-				var configuration = JSON.parse(fs.readFileSync(path.join(configurationFile, 'server', 'Configurations.json'), 'utf-8'));
+				var configuration = JSON.parse(fs.readFileSync('config.json', 'utf-8'));
 				ServerConfiguration.HostName = configuration.hostName;
 				ServerConfiguration.Port = configuration.port;
 				ServerConfiguration.Protocol = configuration.protocol;
