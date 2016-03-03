@@ -42,9 +42,9 @@ module Wappli{
 					input.onchange = event => setValues(this.Values);
 				else
 					input.disabled = true;
-				this.fieldset.appendChild(input);
 				this.inputs.push(input);
 				var label: HTMLLabelElement = document.createElement("label");
+				label.appendChild(input);
 				label.setAttribute("for", value);
 				label.appendChild(document.createTextNode(value));
 				this.fieldset.appendChild(label);
