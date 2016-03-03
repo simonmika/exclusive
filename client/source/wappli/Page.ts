@@ -35,9 +35,8 @@ module Wappli{
             // Back Button
             if (!this.dialog) {
                 this.backButton = document.createElement("a");
-                this.backButton.setAttribute("data-role", "button");
-                this.backButton.setAttribute("data-rel", "back");
-                this.backButton.classList.add("ui-btn-left");
+				this.backButton.classList.add("ui-btn", "ui-shadow", "ui-corner-all", "ui-btn-left");
+                this.backButton.setAttribute("data-rel", "back");                
                 this.backButton.appendChild(document.createTextNode("back"));
             } else
                 this.backButton = null;
@@ -46,7 +45,8 @@ module Wappli{
             this.heading.appendChild(this.title = document.createTextNode(this.name));
             // Content
             this.content = document.createElement("div");
-            this.content.setAttribute("data-role", "content");
+			this.content.classList.add("ui-content");
+            this.content.setAttribute("role", "main");
             this.content.style.minHeight = "100%";
             // Footer
             this.footer = document.createElement("footer");
@@ -92,15 +92,13 @@ module Wappli{
         private CreateChildLink(child: Page): HTMLAnchorElement {
             this.AddHiddenChild(child);
             var result: HTMLAnchorElement = document.createElement("a");
-            result.setAttribute("data-role", "button");
+			result.classList.add("ui-btn", "ui-shadow", "ui-corner-all");
             result.setAttribute("data-transition", child.dialog ? "pop" : "slide");
             if (child.dialog)
                 result.setAttribute("data-rel", "dialog");
             result.href = "#page" + child.name;
-            if (child.icon !== null) {
-                result.setAttribute("data-icon", child.icon);
-                result.setAttribute("data-iconpos", "notext");
-            }
+            if (child.icon !== null)
+				result.classList.add("ui-btn-icon-notext", "ui-icon-" + child.icon);
             else
                 result.appendChild(document.createTextNode(child.Button));
             return result

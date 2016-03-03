@@ -30,7 +30,7 @@ module Wappli {
 			else
 				this.input.disabled = true;
 			this.container = document.createElement("div");
-			this.container.setAttribute("data-role", "fieldcontain");
+			this.container.classList.add("ui-field-contain");
 			this.container.appendChild(this.label);
 			this.container.appendChild(this.input);
 		}

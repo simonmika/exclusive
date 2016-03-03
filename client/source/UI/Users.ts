@@ -15,15 +15,19 @@ module Imint.Exclusive.Client.UI {
 				console.log("Users Page reload");
 				return (this.Value !== undefined) ?
 					this.Value.sort((left, right) => {
-						return left.company < right.company ? -1 :
-							left.company > right.company ? 1 :
-								left.name < right.name ? -1 :
-									left.name > right.name ? 1 : 0;
+						var leftCompany = left.company.toUpperCase();
+						var leftName = left.name.toUpperCase();
+						var rightCompany = right.company.toUpperCase();
+						var rightName = right.name.toUpperCase();
+						return leftCompany < rightCompany ? -1 :
+							leftCompany > rightCompany ? 1 :
+								leftName < rightName ? -1 :
+									leftName > rightName ? 1 : 0;
 					}).map(user => new Wappli.ListItem(user.company + " (" + user.name + ")", () => {
 						this.backend.Users.Current.Set(user);
 						this.childPage.Show();
 					})) : null;
-			}, false, "users"));
+			}, false, "users", true));
 		}
 	}
 }

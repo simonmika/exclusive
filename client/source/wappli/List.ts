@@ -4,13 +4,14 @@
 module Wappli{
 	export class List extends Widget {
 		private list: HTMLUListElement;
-        constructor(private getValues: () => ListItem[], mixed: boolean = false, filter: string = null) {
+        constructor(private getValues: () => ListItem[], mixed: boolean = false, filter: string = null, autoDividers: boolean = false) {
             super();
             this.list = document.createElement("ul");
             this.list.setAttribute("data-role", "listview");
+			if (autoDividers)
+				this.list.setAttribute("data-autodividers", "true");
 			if (filter !== null) {
 				this.list.setAttribute("data-filter", "true");
-				this.list.setAttribute("data-input", "#" + filter + "Filter");
 				this.list.setAttribute("data-filter-placeholder", "Search for " + filter + "..");
 			}
             if (mixed)
