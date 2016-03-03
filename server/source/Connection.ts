@@ -171,6 +171,9 @@ module Exclusive {
 					callback(true);
 				else
 					callback(false);
+			}).on("error", (error: any) => {
+				console.log("There was an error when validating credentials.\n" + Error.toString());
+				callback(false);
 			});
 		}
 		private static ContentType(file: string): string {

@@ -157,7 +157,7 @@ module Exclusive {
 				}
 			}
 			else
-				connection.Write("User Not Found", 404, { 'Content-Type': 'text/html; charset=utf-8' })
+				connection.Write("Not Found", 404, { 'Content-Type': 'text/html; charset=utf-8' })
 		}
 		public static ToJSON(file: any[]): string {
 			var result = "[\n";

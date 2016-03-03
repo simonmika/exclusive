@@ -20,14 +20,19 @@ module Exclusive {
 			// TODO: create POST
 		}
 		private requestCallback(request: any, response: any) {
-			var parsedUrl = url.parse(request.url);
-			var urlPath = HttpPath.Build(parsedUrl.path);
-			var connection = new Connection(parsedUrl, request, response);
-			var service = new Service();
-			if (urlPath && urlPath.Head == "data")
-				service.Process(connection, urlPath.Tail);
-			else
-				connection.Write("Page Requested Not Found", 404, { 'Content-Type': 'text/html' });
+				var parsedUrl = url.parse(request.url);
+				var urlPath = HttpPath.Build(parsedUrl.path);
+				var connection = new Connection(parsedUrl, request, response);
+				var service = new Service();
+			try {
+				if (urlPath && urlPath.Head == "data")
+					service.Process(connection, urlPath.Tail);
+				else
+					connection.Write("Page Requested Not Found", 404, { 'Content-Type': 'text/html' });
+			} catch (error) {
+				console.log("There was an error when processing a request.\n" + Error.toString());
+				connection.Write("Server error when processing request", 500, { 'Content-Type': 'text/html' });
+			}
 		}
 	}
 }
