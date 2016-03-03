@@ -41,7 +41,9 @@ module Exclusive {
 			});
 		}
 		function LoadUsers(): void {
-			var folders: string[] = fs.readdirSync(usersPath);
+			var folders: string[] = fs.readdirSync(usersPath).filter((folderName: string) => {
+				return folderName[0] != ".";
+			});
 			folders.forEach(folder => {
 				var userFolder = path.join(usersPath, folder);
 				var meta = JSON.parse(fs.readFileSync(path.join(userFolder, 'meta.json'), "utf-8"));
