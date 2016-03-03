@@ -12,7 +12,7 @@ module Wappli{
 		constructor(identifier: string, legend: string, private widgets: Widget[]) {
 			super();
 			this.container = document.createElement("div");
-			this.container.setAttribute("data-role", "fieldcontain");
+			this.container.classList.add("ui-field-contain");
             this.fieldset = document.createElement("fieldset");
             this.fieldset.setAttribute("data-role", "controlgroup");
             this.container.appendChild(this.fieldset);

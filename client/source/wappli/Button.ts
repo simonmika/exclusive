@@ -8,7 +8,7 @@ module Wappli{
         constructor(label: string, private onActivate: () => void) {
             super();
             this.button = document.createElement("a");
-            this.button.setAttribute("data-role", "button");
+			this.button.classList.add("ui-btn", "ui-shadow", "ui-corner-all");
             this.button.onclick = event => this.onActivate();
             this.button.appendChild(document.createTextNode(label));
         }

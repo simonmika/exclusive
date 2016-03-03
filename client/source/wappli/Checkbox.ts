@@ -25,7 +25,7 @@ module Wappli{
 		constructor(identifier: string, legend: string, values: string[], private getValues: () => string[] = null, setValues: (values: string[]) => void = null) {
 			super();
 			this.container = document.createElement("div");
-			this.container.setAttribute("data-role", "fieldcontain");
+			this.container.classList.add("ui-field-contain");
             this.fieldset = document.createElement("fieldset");
             this.fieldset.setAttribute("data-role", "controlgroup");
             this.container.appendChild(this.fieldset);
@@ -33,11 +33,6 @@ module Wappli{
 			this.legend.appendChild(document.createTextNode(legend));
 			this.fieldset.appendChild(this.legend);
 			values.forEach(value => {
-				var label: HTMLLabelElement = document.createElement("label");
-				label.setAttribute("for", value);
-				label.appendChild(document.createTextNode(value));
-				this.fieldset.appendChild(label);
-				this.labels.push(label);
 				var input: HTMLInputElement = document.createElement("input");
 				input.name = value;
 				input.id = value;
@@ -49,6 +44,11 @@ module Wappli{
 					input.disabled = true;
 				this.fieldset.appendChild(input);
 				this.inputs.push(input);
+				var label: HTMLLabelElement = document.createElement("label");
+				label.setAttribute("for", value);
+				label.appendChild(document.createTextNode(value));
+				this.fieldset.appendChild(label);
+				this.labels.push(label);
             });
 		}
 		GetElement() {

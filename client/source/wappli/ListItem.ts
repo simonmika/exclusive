@@ -4,8 +4,9 @@ module Wappli{
 		}
 		public GetElement(): HTMLLIElement {
 			var result: HTMLLIElement = document.createElement("li");
+			var link: HTMLAnchorElement = undefined;
 			if (this.onActivate !== null) {
-				var link: HTMLAnchorElement = document.createElement("a");
+				link = document.createElement("a");
                 link.href = "#";
 				link.appendChild(document.createTextNode(this.label));
 				link.onclick = event => this.onActivate();
@@ -13,13 +14,16 @@ module Wappli{
 			}
 			else {
 				result.appendChild(document.createTextNode(this.label));
-				result.setAttribute("data-role", "divider");
+				result.setAttribute("data-role", "list-divider");
 			}
 			if (this.count !== undefined) {
 				var span: HTMLSpanElement = document.createElement("span");
 				span.classList.add("ui-li-count");
 				span.appendChild(document.createTextNode(this.count.toString()));
-				result.appendChild(span);
+				if (link !== undefined)
+					link.appendChild(span);
+				else 
+					result.appendChild(span);
 			}
             return result;
 		}
