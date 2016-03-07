@@ -103,8 +103,9 @@ module Exclusive {
 			if (contents != "[")
 				contents = contents.slice(0, -1);
 			contents += "]";
+			var protocol = ServerConfiguration.Protocol;
 			return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact +
-				"\",\n\"url\": \"http://" + this.url + "\",\n\"logUrl\": \"http://" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"http://" + this.ContentsUrl + "\"\n}";
+				"\",\n\"url\": \"" + protocol + "://" + this.url + "\",\n\"logUrl\": \"" + protocol + "://" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"" + protocol + "://" + this.ContentsUrl + "\"\n}";
 		}
 	}
 }
