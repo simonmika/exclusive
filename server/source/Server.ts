@@ -30,7 +30,7 @@ module Exclusive {
 				else
 					connection.Write("Page Requested Not Found", 404, { 'Content-Type': 'text/html' });
 			} catch (error) {
-				console.log("There was an error when processing a request.\n" + Error.toString());
+				console.log("There was an error when processing a request.\n" + error.toString());
 				connection.Write("Server error when processing request", 500, { 'Content-Type': 'text/html' });
 			}
 		}

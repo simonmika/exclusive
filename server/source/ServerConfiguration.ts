@@ -19,8 +19,8 @@ module Exclusive {
 				ServerConfiguration.AuthorisationServer = configuration.authorisationServer;
 				ServerConfiguration.AuthorisationPath = configuration.authorisationPath;
 			}
-			catch (Error) {
-				console.log("There was an error while reading the configuration file, unable to continue.\n" + Error.toString());
+			catch (error) {
+				console.log("There was an error while reading the configuration file, unable to continue.\n" + error.toString());
 				process.exit(1);
 			}
 		}

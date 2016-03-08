@@ -172,7 +172,7 @@ module Exclusive {
 				else
 					callback(false);
 			}).on("error", (error: any) => {
-				console.log("There was an error when validating credentials.\n" + Error.toString());
+				console.log("There was an error when validating credentials.\n" + error.toString());
 				callback(false);
 			});
 		}
