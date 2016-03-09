@@ -14,6 +14,10 @@ module Imint.Exclusive.Client.UI {
 			this.AddHiddenChild(usersPage);
 			this.pages.push(contentPage, usersPage);
 			this.AddHeaderChild(new Settings(this.backend.Service));
+			var thisRoot = this;
+			backend.GlobalLog.FetchUrl(url => {
+				thisRoot.AddHeaderButton("Download log", url, false, "external");
+			});					
 		}
 		Setup() {
 			this.Append(new Wappli.List(() => this.pages.map(page => new Wappli.ListItem(page.Button, () => page.Show()))));

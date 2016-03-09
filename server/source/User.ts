@@ -24,7 +24,7 @@ module Exclusive {
 		}
 		public AddLog(address: string, method: string, httpPath: HttpPath, statusCode: number, onCompleted: (result: boolean, log: Log) => void) {
 			var ipv4 = address.split(':');
-			var log = new Log(new Date(), ipv4[ipv4.length - 1], method, httpPath, statusCode);
+			var log = new Log(new Date(), ipv4[ipv4.length - 1], method, httpPath, statusCode, this);
 			fs.appendFile(path.join(this.path, 'log.csv'), log.toString() + "\n", 'utf-8', (error: any) => {
 				if (error)
 					onCompleted(false, null);
@@ -32,7 +32,7 @@ module Exclusive {
 					onCompleted(true, log);
 			});
 			if (httpPath.Tail.Tail == null)
-				fs.appendFile(path.join(ServerConfiguration.DataLocalPath, 'global_log', 'global_log.csv'), log.toString() + "\n", 'utf-8', (error: any) => {
+				fs.appendFile(path.join(ServerConfiguration.DataLocalPath, 'global_log', 'global_log.csv'), log.toStringExtended() + "\n", 'utf-8', (error: any) => {
 					if (error)
 						console.log("Error when saving global log: " + error.toString())
 				});

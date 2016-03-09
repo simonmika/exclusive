@@ -6,10 +6,13 @@ module Exclusive {
 		get Content() { return this.content; }
 		private app: string;
 		get App() { return this.app; }
+		private global_log: string;
+		get GlobalLog() { return this.global_log; }
 		constructor() {
 			this.users = path.join(ServerConfiguration.DataLocalPath, 'users');
 			this.content = path.join(ServerConfiguration.DataLocalPath, 'content');
 			this.app = ServerConfiguration.AppPath;
+			this.global_log = path.join(ServerConfiguration.DataLocalPath, 'global_log');
 		}
 		public Process(connection: Connection, urlPath: HttpPath) {
 			if (!urlPath || urlPath.Head.length <= 0) {
@@ -19,6 +22,7 @@ module Exclusive {
 						var toPrint = "{\n\"url\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data') + "\",\n";
 						toPrint += "\"usersUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'users') + "\",\n";
 						toPrint += "\"contentUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'content') + "\",\n";
+						toPrint += "\"logUrl\": \"" + ServerConfiguration.Protocol + "://" + path.join(ServerConfiguration.HostName, 'data', 'global_log.csv') + "\",\n";
 						toPrint += "\"content\": " + contents + "\n}";
 						connection.Write(toPrint, 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 					}
@@ -46,6 +50,15 @@ module Exclusive {
 										connection.Write(Service.ToJSON(DataStore.Content), 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 									else
 										connection.WriteFile(path.join(this.content, urlPath.Tail.ToString()));
+							}
+						});
+						break;
+					case "global_log.csv":
+						connection.Authenticate((authenticated: boolean) => {
+							if (authenticated) {
+								if (connection.Request.method == "GET") {
+									connection.WriteFile(path.join(this.global_log, 'global_log.csv'));
+								}
 							}
 						});
 						break;
