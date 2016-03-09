@@ -25,13 +25,13 @@ module Exclusive {
 			}
 			return result;
 		}
-		function processLogs(logs: string[]): Log[] {
+		function processLogs(logs: string[], user: BackendUser): Log[] {
 			var clearLogs = RemoveEmptyLines(logs);
 			var result: Log[] = [];
 			clearLogs.forEach(log => {
 				var serperators = [',', ';'];
 				var seperatedLog = log.split(new RegExp(serperators.join('|')));
-				result.push(new Log(new Date(seperatedLog[0]), seperatedLog[1], seperatedLog[2], HttpPath.Build(seperatedLog[3]), Number(seperatedLog[4])))
+				result.push(new Log(new Date(seperatedLog[0]), seperatedLog[1], seperatedLog[2], HttpPath.Build(seperatedLog[3]), Number(seperatedLog[4]), user));
 			});
 			return result;
 		}
@@ -55,7 +55,7 @@ module Exclusive {
 				user.Contents = RemoveEmptyLines(contents);
 				if (fs.existsSync(path.join(userFolder, 'log.csv'))){
 					var logs: string[] = fs.readFileSync(path.join(userFolder, 'log.csv'), "utf-8").split("\n");
-					user.Logs = processLogs(logs);
+					user.Logs = processLogs(logs, user);
 				}
 				AddUser(user);
 			});
