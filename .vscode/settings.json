@@ -1,8 +1,13 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-		"search.exclude": {
-		"typings": true,
-		"build": true
+	"files.exclude": {
+		"**/.git": true,
+		"build": true,
+		"node_modules": true
+	},
+	"search.exclude": {
+		"build": true,
+		"node_modules": true
 	},
 	"editor.insertSpaces": false
 }
