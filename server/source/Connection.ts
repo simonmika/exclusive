@@ -165,16 +165,20 @@ module Exclusive {
 			return (new Buffer(basicAuthorisation, 'base64')).toString().split(':');
 		}
 		private ValidateCredential(userName: string, password: string, callback: (result: boolean) => void) {
-			var https = require('https');
-			https.get({ hostname: ServerConfiguration.AuthorisationServer, path: ServerConfiguration.AuthorisationPath, auth: userName + ':' + password }, (response: any) => {
-				if (response.statusCode == 200)
-					callback(true);
-				else
+			if (ServerConfiguration.AuthorisationServer && ServerConfiguration.AuthorisationServer != "") {
+				var https = require('https');
+				https.get({ hostname: ServerConfiguration.AuthorisationServer, path: ServerConfiguration.AuthorisationPath, auth: userName + ':' + password }, (response: any) => {
+					if (response.statusCode == 200)
+						callback(true);
+					else
+						callback(false);
+				}).on("error", (error: any) => {
+					console.log("There was an error when validating credentials.\n" + error.toString());
 					callback(false);
-			}).on("error", (error: any) => {
-				console.log("There was an error when validating credentials.\n" + error.toString());
-				callback(false);
-			});
+				});
+			}
+			else // If no configuration is given, always authorize
+				callback(true);
 		}
 		private static ContentType(file: string): string {
 			var contentTypes: any  = {".html": "text/html; charset=utf8",
