@@ -2,14 +2,14 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"preLaunchTask": "build server",
+			"preLaunchTask": "build",
 			"name": "Launch",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceRoot}/build/exclusive.js",
 			"stopOnEntry": false,
 			"args": [],
-			"cwd": ".",
+			"cwd": "${workspaceRoot}",
 			"runtimeExecutable": null,
 			"runtimeArgs": [
 				"--nolazy"
@@ -17,7 +17,7 @@
 			"env": {
 				"NODE_ENV": "development"
 			},
-			"externalConsole": false,
+			"console": "internalConsole",
 			"sourceMaps": true
 		},
 		{
