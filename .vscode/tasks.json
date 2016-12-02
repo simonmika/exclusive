@@ -1,6 +1,4 @@
 {
-	// See https://go.microsoft.com/fwlink/?LinkId=733558
-	// for the documentation about the tasks.json format
 	"version": "0.1.0",
 	"command": "npm",
 	"isShellCommand": true,
@@ -28,6 +26,60 @@
 					}			
 				]
 			}
+		},
+		{
+			"taskName": "build-server",
+			"args": ["run", "build-server"],
+			"problemMatcher": {
+				"owner": "webpack",
+				"severity": "error",
+				"fileLocation": "absolute", 
+				"pattern": [
+					{
+						"regexp": "ERROR in (.*)",	
+						"file" : 1 
+					},
+					{
+						"regexp": "\\((\\d+),(\\d+)\\):(.*)",
+						"line":1,
+						"column": 2,
+						"message": 3
+					}			
+				]
+			}
+		},
+		{
+			"taskName": "build-client",
+			"args": ["run", "build-client"],
+			"problemMatcher": {
+				"owner": "webpack",
+				"severity": "error",
+				"fileLocation": "absolute", 
+				"pattern": [
+					{
+						"regexp": "ERROR in (.*)",	
+						"file" : 1 
+					},
+					{
+						"regexp": "\\((\\d+),(\\d+)\\):(.*)",
+						"line":1,
+						"column": 2,
+						"message": 3
+					}			
+				]
+			}
+		},
+		{
+			"taskName": "start",
+			"args": ["run", "install"]
+		},
+		{
+			"taskName": "start-server",
+			"args": ["run", "install"]
+		},
+		{
+			"taskName": "start-client",
+			"args": ["run", "install"]
 		},
 		{
 			"taskName": "install",

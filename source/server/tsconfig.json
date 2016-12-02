@@ -1,24 +1,25 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
+		"target": "es6",
 		"module": "commonjs",
-		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"noImplicitAny": false,
 		"removeComments": true,
 		"preserveConstEnums": true,
-		"out": "build/exclusive.js",
+		"strictNullChecks": false,
 		"sourceMap": true,
-		"sourceRoot": "../server/source"
+		"sourceRoot": "./",
+		"outDir": "../../build/",
+		"types": [
+			"node",
+			"jquery",
+			"jquerymobile"
+		]
 	},
+	"exclude": [
+		"node_modules"
+	],
 	"files": [
-		"source/BackendUser.ts",
-		"source/Connection.ts",
-		"source/DataStore.ts",
-		"source/HttpPath.ts",
-		"source/Log.ts",
-		"source/Server.ts",
-		"source/Service.ts",
-		"source/User.ts",
-		"source/Exclusive.ts",
-		"source/ServerConfiguration.ts"
+		"Exclusive.ts"
 	]
 }
