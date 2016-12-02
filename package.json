@@ -2,25 +2,46 @@
 	"name": "cogneco-exclusive",
 	"version": "1.0.0",
 	"description": "Webservice to share content exclusively.",
-	"main": "build/exclusive.js",
-	"scripts": {
-		"build": "tsc -p client && cp client/index.html build/app/ && tsc -p server",
-		"prestart": "npm run build",
-		"start": "node build/exclusive.js",
-		"debug": "cp -r --parents client/source build/app/ && npm start",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
+	"author": "Simon Mika, Molham Khalil, Jonathan Udd, Fredrik Bryntesson",
+	"license": "AGPL-3.0",
+	"homepage": "https://github.com/cogneco/exclusive#readme",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/cogneco/exclusive.git"
 	},
-	"author": "Simon Mika, Molham Khalil, Jonathan Udd, Fredrik Bryntesson",
-	"license": "AGPL-3.0",
 	"bugs": {
 		"url": "https://github.com/cogneco/exclusive/issues"
 	},
-	"homepage": "https://github.com/cogneco/exclusive#readme",
+	"main": "build/exclusive-server.js",
+	"scripts": {
+		"prebuild": "npm run clean",
+		"build": "webpack",
+		"start": "NODE_ENV=development webpack-dev-server",
+		"clean": "rimraf build"
+	},
 	"devDependencies": {
-		"typescript": "1.6"
+		"@types/jquery": "^2.0.34",
+		"@types/jquerymobile": "^1.4.28",
+		"@types/extract-text-webpack-plugin": "^2.0.0",
+		"@types/html-webpack-plugin": "^2.22.4",
+		"@types/node": "^6.0.51",
+		"@types/webpack": "^2.0.0",
+		"@types/webpack-dev-server": "^1.12.5",
+		"css-loader": "^0.26.0",
+		"extract-text-webpack-plugin": "^2.0.0-beta.4",
+		"file-loader": "^0.9.0",
+		"html-webpack-plugin": "^2.24.1",
+		"json-loader": "^0.5.4",
+		"path": "^0.12.7",
+		"rimraf": "^2.5.4",
+		"style-loader": "^0.13.1",
+		"ts-loader": "^1.2.0",
+		"ts-node": "^1.7.0",
+		"tslint": "^4.0.2",
+		"tslint-react": "^2.0.0",
+		"typescript": "^2.0.10",
+		"url-loader": "^0.5.7",
+		"webpack": "^2.1.0-beta.27",
+		"webpack-dev-server": "^2.1.0-beta.12"
 	}
 }

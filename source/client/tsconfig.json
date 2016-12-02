@@ -1,42 +1,20 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
-		"module": "commonjs",
-		"noImplicitAny": true,
+		"target": "es5",
+		"module": "es2015",
+		"moduleResolution": "node",
+		"noImplicitAny": false,
 		"removeComments": true,
 		"preserveConstEnums": true,
-		"out": "build/app/exclusive-client.js",
+		"strictNullChecks": false,
 		"sourceMap": true,
-		"sourceRoot": "../client/source"
+		"types": [
+			"node",
+			"jquery",
+			"jquerymobile"
+		]
 	},
-	"files": [
-		"source/data/Backend.ts",
-		"source/data/IRoot.ts",
-		"source/data/User.ts",
-		"source/UI/Content.ts",
-		"source/UI/CreateUser.ts",
-		"source/UI/EditUser.ts",
-		"source/UI/Root.ts",
-		"source/UI/Settings.ts",
-		"source/UI/User.ts",
-		"source/UI/Users.ts",
-		"source/UI/ViewContent.ts",
-		"source/UI/ViewLocation.ts",
-		"source/UI/ViewLog.ts",
-		"source/wappli/Browser.ts",
-		"source/wappli/Button.ts",
-		"source/wappli/Checkbox.ts",
-		"source/wappli/Collection.ts",
-		"source/wappli/CreateDialog.ts",
-		"source/wappli/Field.ts",
-		"source/wappli/Group.ts",
-		"source/wappli/List.ts",
-		"source/wappli/ListItem.ts",
-		"source/wappli/Page.ts",
-		"source/wappli/Resource.ts",
-		"source/wappli/ResourcePage.ts",
-		"source/wappli/Service.ts",
-		"source/wappli/Widget.ts",
-		"source/Client.ts"
+	"exclude": [
+		"node_modules"
 	]
 }

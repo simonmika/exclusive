@@ -9,8 +9,25 @@
 	"tasks": [
 		{
 			"taskName": "build",
-			"args": ["build"],
-			"isBuildCommand": true
+			"args": ["run", "build"],
+			"isBuildCommand": true,
+			"problemMatcher": {
+				"owner": "webpack",
+				"severity": "error",
+				"fileLocation": "absolute", 
+				"pattern": [
+					{
+						"regexp": "ERROR in (.*)",	
+						"file" : 1 
+					},
+					{
+						"regexp": "\\((\\d+),(\\d+)\\):(.*)",
+						"line":1,
+						"column": 2,
+						"message": 3
+					}			
+				]
+			}
 		},
 		{
 			"taskName": "install",

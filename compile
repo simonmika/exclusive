@@ -1,4 +1,0 @@
-#!/bin/bash
-tsc -p client
-cp client/index.html build/app/
-tsc -p server

@@ -2,10 +2,45 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"preLaunchTask": "build",
-			"name": "Launch",
+			"name": "Launch Chrome against localhost, with sourcemaps",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:8080",
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}"
+		},
+		{
+			"name": "Attach to Chrome, with sourcemaps",
+			"type": "chrome",
+			"request": "attach",
+			"port": 9222,
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}"
+		},
+		{
+			"name": "Webpack Development Server",
 			"type": "node",
 			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"program": "${workspaceRoot}/node_modules/.bin/webpack-dev-server",
+			"env": {
+				"NODE_ENV": "development"
+			}
+		},
+		{
+			"name": "Launch App",
+			"type": "composite",
+			"request": "launch",
+			"configurationNames": [
+				"Webpack Development Server",
+				"Launch Chrome against localhost, with sourcemaps"
+			]
+		},
+		{
+			"name": "Launch Exclusive Server",
+			"type": "node",
+			"request": "launch",
+			"preLaunchTask": "build",
 			"program": "${workspaceRoot}/build/exclusive.js",
 			"stopOnEntry": false,
 			"args": [],
@@ -19,12 +54,6 @@
 			},
 			"console": "internalConsole",
 			"sourceMaps": true
-		},
-		{
-			"name": "Attach",
-			"type": "node",
-			"request": "attach",
-			"port": 5858
 		}
 	]
 }
