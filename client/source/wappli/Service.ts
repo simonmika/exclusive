@@ -31,9 +31,9 @@ module Wappli{
 				this.user = settings.user;
 				this.password = settings.password;
 			} else {
-				this.server = "https://aurora.imint.se/data";
-				this.user = "";
-				this.password = "";
+				this.server = "http://localhost/data";
+				this.user = "user";
+				this.password = "password";
 			}
 			this.UpdateAuthorization();
 			this.changed();

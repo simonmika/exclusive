@@ -18,7 +18,7 @@ module Exclusive {
 			if (!configuration)
 				configuration = {}
 			ServerConfiguration.HostName = configuration.hostName ? configuration.hostName : 'localhost';
-			ServerConfiguration.Port = configuration.port ? configuration.port : 8080;
+			ServerConfiguration.Port = configuration.port ? configuration.port : 80;
 			ServerConfiguration.Protocol = configuration.protocol ? configuration.protocol : 'http';
 			ServerConfiguration.DataLocalPath = path.resolve(configuration.data ? configuration.data : 'data', '');
 			var absolutePath = path.resolve(configuration.build ? configuration.build : 'build', '');
