@@ -28,7 +28,7 @@ export class Service {
 			this.user = settings.user;
 			this.password = settings.password;
 		} else {
-			this.server = "http://localhost/data";
+			this.server = "http://localhost:8080/data";
 			this.user = "user";
 			this.password = "password";
 		}

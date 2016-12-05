@@ -15,7 +15,7 @@ const config: webpack.Configuration = {
 	context: __dirname,
 	entry: ["../source/client/App.ts"].concat(development ? [
 			"webpack/hot/dev-server",
-			"webpack-dev-server/client?http://localhost:8080"
+			"webpack-dev-server/client?http://localhost:8089"
 		] : [
 		]),
 	devtool: "#source-map",

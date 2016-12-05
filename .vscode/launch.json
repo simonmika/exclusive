@@ -5,7 +5,7 @@
 			"name": "Launch Chrome",
 			"type": "chrome",
 			"request": "launch",
-			"url": "http://localhost:8080",
+			"url": "http://localhost:8089",
 			"sourceMaps": true,
 			"webRoot": "${workspaceRoot}"
 		},
@@ -24,7 +24,8 @@
 			"type": "composite",
 			"request": "launch",
 			"configurationNames": [
-				"Webpack Development Server",
+				"Launch Webpack Development Server",
+				"Launch Exclusive Server",
 				"Launch Chrome"
 			]
 		},
