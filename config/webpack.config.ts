@@ -7,10 +7,18 @@ const development = process.env.NODE_ENV == "development"
 
 const config: webpack.Configuration = {
 	devServer: {
+		port: 8089,
 		contentBase: "../build",
 		stats: {
 			colors: true
-		}
+		},
+		proxy: [
+			{
+				context: ["/data**", ],
+				target: "http://localhost:8080",
+				secure: false,
+			}
+		]
 	},
 	context: __dirname,
 	entry: ["../source/client/App.ts"].concat(development ? [
@@ -55,8 +63,8 @@ const config: webpack.Configuration = {
 		],
 	},
 	output: {
-		path: path.resolve(__dirname, "../build/app"),
-		publicPath: "/",
+		path: path.resolve(__dirname, "../build/app/"),
+		publicPath: "",
 		filename: development ? "exclusive.client.js" : "exclusive.client.[hash:12].min.js",
 	},
 }

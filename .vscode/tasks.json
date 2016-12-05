@@ -65,21 +65,21 @@
 						"line":1,
 						"column": 2,
 						"message": 3
-					}			
+					}
 				]
 			}
 		},
 		{
 			"taskName": "start",
-			"args": ["run", "install"]
+			"args": ["run", "start"]
 		},
 		{
 			"taskName": "start-server",
-			"args": ["run", "install"]
+			"args": ["run", "start-server"]
 		},
 		{
 			"taskName": "start-client",
-			"args": ["run", "install"]
+			"args": ["run", "start-client"]
 		},
 		{
 			"taskName": "install",

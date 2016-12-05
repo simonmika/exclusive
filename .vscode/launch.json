@@ -5,12 +5,12 @@
 			"name": "Launch Chrome",
 			"type": "chrome",
 			"request": "launch",
-			"url": "http://localhost:8089",
+			"url": "http://localhost:8089/",
 			"sourceMaps": true,
 			"webRoot": "${workspaceRoot}"
 		},
 		{
-			"name": "Launch Webpack Development Server",
+			"name": "Launch Webpack",
 			"type": "node",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
@@ -24,13 +24,13 @@
 			"type": "composite",
 			"request": "launch",
 			"configurationNames": [
-				"Launch Webpack Development Server",
-				"Launch Exclusive Server",
-				"Launch Chrome"
+				"Launch Chrome",
+				"Launch Webpack",
+				"Launch Server"
 			]
 		},
 		{
-			"name": "Launch Exclusive Server",
+			"name": "Launch Server",
 			"type": "node",
 			"request": "launch",
 			"preLaunchTask": "build-server",

@@ -9,6 +9,10 @@ export module ServerConfiguration {
 	export var AppPath: string;
 	export var AuthorisationServer: string;
 	export var AuthorisationPath: string;
+	export var BaseUrl: string
+	export function CreateUrl(path?: string[]) {
+		return ServerConfiguration.BaseUrl + "/" + (path ? path.join("/") : "")
+	}
 	export function ReadServerConfigurations(configFile: string): void {
 		var configuration: any;
 		try {
@@ -27,5 +31,7 @@ export module ServerConfiguration {
 		ServerConfiguration.AppPath = path.join(absolutePath, 'app');
 		ServerConfiguration.AuthorisationServer = configuration.authorisationServer;
 		ServerConfiguration.AuthorisationPath = configuration.authorisationPath;
+
+		ServerConfiguration.BaseUrl = configuration.url ? configuration.url : 'http://localhost:8089/data'
 	}
 }

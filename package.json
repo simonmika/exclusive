@@ -18,8 +18,11 @@
 		"build": "npm run build-client && npm run build-server",
 		"build-client": "webpack",
 		"build-server": "tsc -p source/server/",
+		"prestart-client": "npm run build-client" ,
 		"start-client": "NODE_ENV=development webpack-dev-server",
+		"prestart-server": "npm run build-server" ,
 		"start-server": "node build/Exclusive.js",
+		"prestart": "npm run clean",
 		"start": "npm run start-server | npm run start-client",
 		"clean": "rm -r build"
 	},
