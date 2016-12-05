@@ -1,0 +1,11 @@
+{
+	"url": "http://localhost:8089/data",
+	"hostName": "localhost",
+	"port": 8080,
+	"protocol": "http",
+	"data": "data",
+	"build": "build",
+	"absolutePath": "",
+	"authorisationServer": "",
+	"authorisationPath": ""
+}
