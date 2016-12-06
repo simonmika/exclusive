@@ -6,9 +6,9 @@ import * as http from 'http';
 import * as url from 'url';
 
 export class Server {
-	private server: any;
+	private server: http.Server;
 	constructor(private port: number) {
-		this.server = http.createServer((request: any, response: any) => {
+		this.server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
 			this.requestCallback(request, response);
 		});
 	}
@@ -25,7 +25,7 @@ export class Server {
 	createRequest(url: string, request: string) {
 		// TODO: create POST
 	}
-	private requestCallback(request: any, response: any) {
+	private requestCallback(request: http.IncomingMessage, response: http.ServerResponse) {
 			var parsedUrl = url.parse(request.url);
 			var urlPath = HttpPath.Build(parsedUrl.path);
 			var connection = new Connection(parsedUrl, request, response);

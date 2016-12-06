@@ -27,10 +27,10 @@ export class Service {
 			connection.Authenticate((authenticated: boolean) => {
 				if (authenticated) {
 					var contents = Service.ToJSON(DataStore.Content);
-					var toPrint = "{\n\"url\": \"" + ServerConfiguration.CreateUrl([]) + "\",\n";
-					toPrint += "\"usersUrl\": \"" + ServerConfiguration.CreateUrl(['users']) + "\",\n";
-					toPrint += "\"contentUrl\": \"" + ServerConfiguration.CreateUrl(['content']) + "\",\n";
-					toPrint += "\"logUrl\": \"" + ServerConfiguration.CreateUrl(['global_log.csv']) + "\",\n";
+					var toPrint = "{\n\"url\": \"" + connection.CreateUrl([]) + "\",\n";
+					toPrint += "\"usersUrl\": \"" + connection.CreateUrl(['users']) + "\",\n";
+					toPrint += "\"contentUrl\": \"" + connection.CreateUrl(['content']) + "\",\n";
+					toPrint += "\"logUrl\": \"" + connection.CreateUrl(['global_log.csv']) + "\",\n";
 					toPrint += "\"content\": " + contents + "\n}";
 					connection.Write(toPrint, 200, { 'Content-Type': 'application/json; charset=UTF-8' });
 				}

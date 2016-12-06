@@ -8,22 +8,25 @@ import * as path from 'path';
 import * as url from 'url';
 
 export class Connection {
-	private parsedUrl: any;
 	private requestUrl: string;
 	private requestPath: string;
-	private request: any;
 	get Request() { return this.request; }
-	private response: any;
 	get Response() { return this.response; }
+
 	private authorisation: any;
-	constructor(parsedUrl: any, request: any, response: any) {
-		this.parsedUrl = parsedUrl;
+	private baseUrl: string
+	constructor(private parsedUrl: url.Url, private request: http.IncomingMessage, private response: http.ServerResponse) {
 		this.requestUrl = parsedUrl.href
 		this.requestPath = parsedUrl.path;
 		this.request = request;
 		this.response = response;
 		this.authorisation = request.headers["authorization"];
+		this.baseUrl = request.url
 	}
+	CreateUrl(path?: string[]) {
+		return this.request.headers["Referer"] + (path ? path.join("/") : "")
+	}
+
 	Write(message: string, statusCode: number, headers: any) {
 		this.response.writeHead(statusCode, http.STATUS_CODES[statusCode], headers);
 		this.response.write(message);
