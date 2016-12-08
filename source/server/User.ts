@@ -114,8 +114,7 @@ export class User extends BackendUser {
 		if (contents != "[")
 			contents = contents.slice(0, -1);
 		contents += "]";
-		var protocol = ServerConfiguration.Protocol;
 		return "{\n\"name\": \"" + this.name + "\",\n\"company\": \"" + this.company + "\",\n\"contact\": \"" + this.contact +
-			"\",\n\"url\": \"" + protocol + "://" + this.url + "\",\n\"logUrl\": \"" + protocol + "://" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"" + protocol + "://" + this.ContentsUrl + "\"\n}";
+			"\",\n\"url\": \"" +  this.url + "\",\n\"logUrl\": \"" + this.LogUrl + "\",\n\"folders\": " + contents + ",\n\"foldersUrl\": \"" + this.ContentsUrl + "\"\n}";
 	}
 }

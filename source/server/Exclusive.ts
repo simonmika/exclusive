@@ -11,7 +11,7 @@ export class Program {
 		this.registerKeyEvents();
 		ServerConfiguration.ReadServerConfigurations(configFile);
 		DataStore.Initiate();
-		this.server = new Server(ServerConfiguration.Port);
+		this.server = new Server(ServerConfiguration.ListenPort);
 		this.server.start()
 	}
 	registerKeyEvents() {

@@ -1,0 +1,8 @@
+2016-12-06 14:41:33,1,GET,example/testcontent,301,Moved Permanently
+2016-12-06 14:41:33,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:37,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:38,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:39,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:40,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:41,1,GET,example/testcontent,200,OK
+2016-12-06 14:41:43,1,GET,example/testcontent,200,OK

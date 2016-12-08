@@ -7,49 +7,44 @@ const development = process.env.NODE_ENV == "development"
 
 const config: webpack.Configuration = {
 	devServer: {
-		port: 8089,
-		contentBase: "../build",
+		port: 8080,
+		publicPath: "",
+		contentBase: "./build/client/",
 		stats: {
 			colors: true
 		},
-		proxy: [
-			{
-				context: ["/data**", ],
-				target: "http://localhost:8080",
-				secure: false,
-			}
-		]
 	},
 	context: __dirname,
 	entry: ["../source/client/App.ts"].concat(development ? [
-			"webpack/hot/dev-server",
-			"webpack-dev-server/client?http://localhost:8089"
+			"webpack-hot-middleware/client"
 		] : [
-		]),
+		]),	
 	devtool: "#source-map",
 	resolve: {
 		extensions: ["*", ".webpack.js", ".web.js", ".ts", ".js"],
 	},
 	externals: {
-		jquery: 'jQuery'
 	},
 	plugins: (development ? [
+		new webpack.optimize.OccurrenceOrderPlugin(false),
 		new webpack.HotModuleReplacementPlugin(),
+		new webpack.NoErrorsPlugin(),
 	] : [
 		new webpack.optimize.UglifyJsPlugin(),
 		new ExtractTextPlugin("style-[contenthash:10].css"),
 	]).concat([
 		new HtmlWebpackPlugin({ template: "../source/client/index.html" }),
+		new webpack.DefinePlugin({development: JSON.stringify(development)})
 	]),
 	module: {
 		rules: [
 			{
 				test: /\.ts$/,
-				use: "ts-loader?configFileName=../source/client/tsconfig.json",
+				use: "ts-loader?configFileName=./tsconfig.json",
 				exclude: /node_modules/
 			},
 			{
-				test: /\.(u10)|(json)$/,
+				test: /\.json$/,
 				use: "json-loader",
 				exclude: /node_modules/
 			},
@@ -63,9 +58,9 @@ const config: webpack.Configuration = {
 		],
 	},
 	output: {
-		path: path.resolve(__dirname, "../build/app/"),
+		path: path.resolve(__dirname, "../build/client/"),
 		publicPath: "",
-		filename: development ? "exclusive.client.js" : "exclusive.client.[hash:12].min.js",
+		filename: development ? "client.js" : "client.[hash:12].min.js",
 	},
 }
 export default config

@@ -1,25 +1,27 @@
 import { Connection } from "./Connection"
 import { Service } from "./Service"
 import { HttpPath } from "./HttpPath"
-
+import injectStaticServer from "./StaticServer"
 import * as http from 'http';
 import * as url from 'url';
+import * as express from 'express'
 
 export class Server {
-	private server: http.Server;
+	private server: http.Server
+	private application: express.Application;
 	constructor(private port: number) {
-		this.server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
-			this.requestCallback(request, response);
-		});
+		this.application = express()
+		this.application.all(/\/data.*/, this.requestCallback)
+		injectStaticServer(this.application)
 	}
 	start() {
-		this.server.listen(this.port, () => {
-			console.log("listening on port " + this.port);
+		this.server = this.application.listen(this.port, () => {
+			console.log("Exclusive Server Started on port " + this.port);
 		});
 	}
 	stop() {
 		this.server.close(() => {
-			console.log("Exclusive server closed");
+			console.log("Exclusive server Stoped");
 		});
 	}
 	createRequest(url: string, request: string) {

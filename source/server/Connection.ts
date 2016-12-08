@@ -14,17 +14,15 @@ export class Connection {
 	get Response() { return this.response; }
 
 	private authorisation: any;
-	private baseUrl: string
 	constructor(private parsedUrl: url.Url, private request: http.IncomingMessage, private response: http.ServerResponse) {
 		this.requestUrl = parsedUrl.href
 		this.requestPath = parsedUrl.path;
 		this.request = request;
 		this.response = response;
 		this.authorisation = request.headers["authorization"];
-		this.baseUrl = request.url
 	}
 	CreateUrl(path?: string[]) {
-		return this.request.headers["Referer"] + (path ? path.join("/") : "")
+		return ServerConfiguration.BaseUrl + (path ? path.join("/") : "")
 	}
 
 	Write(message: string, statusCode: number, headers: any) {

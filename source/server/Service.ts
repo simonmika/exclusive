@@ -89,7 +89,7 @@ export class Service {
 						if (!newUser)
 							connection.Write("Bad Request", 400, { 'Content-Type': 'text/html; charset=utf-8' });
 						else {
-							newUser.Create(ServerConfiguration.HostName, this.users, (created: boolean) => {
+							newUser.Create(ServerConfiguration.BaseUrl, this.users, (created: boolean) => {
 								if (!created)
 									connection.Write("Internal Server Error", 500, { 'Content-Type': 'text/html; charset=utf-8' });
 								else

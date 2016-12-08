@@ -2,39 +2,28 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch Chrome",
-			"type": "chrome",
-			"request": "launch",
-			"url": "http://localhost:8089/",
-			"sourceMaps": true,
-			"webRoot": "${workspaceRoot}"
-		},
-		{
-			"name": "Launch Webpack",
-			"type": "node",
-			"request": "launch",
-			"cwd": "${workspaceRoot}",
-			"program": "${workspaceRoot}/node_modules/.bin/webpack-dev-server",
-			"env": {
-				"NODE_ENV": "development"
-			}
-		},
-		{
 			"name": "Launch App",
 			"type": "composite",
 			"request": "launch",
 			"configurationNames": [
 				"Launch Chrome",
-				"Launch Webpack",
 				"Launch Server"
 			]
+		},
+		{
+			"name": "Launch Chrome",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:8080/",
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}"
 		},
 		{
 			"name": "Launch Server",
 			"type": "node",
 			"request": "launch",
 			"preLaunchTask": "build-server",
-			"program": "${workspaceRoot}/build/Exclusive.js",
+			"program": "${workspaceRoot}/build/server/Exclusive.js",
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": "${workspaceRoot}",
@@ -43,7 +32,8 @@
 				"--nolazy"
 			],
 			"env": {
-				"NODE_ENV": "development"
+				"NODE_ENV": "development",
+				"DEBUG": "express:*"
 			},
 			"console": "internalConsole",
 			"sourceMaps": true

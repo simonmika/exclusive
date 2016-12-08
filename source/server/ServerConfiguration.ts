@@ -2,9 +2,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 export module ServerConfiguration {
-	export var HostName: string;
-	export var Port: number;
-	export var Protocol: string;
+	export var BaseUrl: string;
+	export var ListenPort: number;
 	export var DataLocalPath: string;
 	export var AppPath: string;
 	export var AuthorisationServer: string;
@@ -19,9 +18,10 @@ export module ServerConfiguration {
 		}
 		if (!configuration)
 			configuration = {}
-		ServerConfiguration.HostName = configuration.hostName ? configuration.hostName : 'localhost';
-		ServerConfiguration.Port = configuration.port ? configuration.port : 8080;
-		ServerConfiguration.Protocol = configuration.protocol ? configuration.protocol : 'http';
+		ServerConfiguration.BaseUrl = configuration.baseUrl ? configuration.baseUrl : 'http://localhost:8080/data/';
+		if (!ServerConfiguration.BaseUrl.endsWith("/"))
+			ServerConfiguration.BaseUrl += "/"	
+		ServerConfiguration.ListenPort = configuration.listenPort ? configuration.listenPort : 8080;
 		ServerConfiguration.DataLocalPath = path.resolve(configuration.data ? configuration.data : 'data', '');
 		var absolutePath = path.resolve(configuration.build ? configuration.build : 'build', '');
 		ServerConfiguration.AppPath = path.join(absolutePath, 'app');

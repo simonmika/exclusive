@@ -1,7 +1,6 @@
 {
-	"hostName": "localhost",
-	"port": 8080,
-	"protocol": "http",
+	"baseUrl": "http://localhost:8080/data/",
+	"listenPort": 8080,
 	"data": "data",
 	"build": "build",
 	"absolutePath": "",

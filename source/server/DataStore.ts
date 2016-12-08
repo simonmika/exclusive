@@ -59,7 +59,7 @@ export module DataStore {
 			var contents: string[] = fs.readFileSync(path.join(userFolder, 'content.csv'), "utf-8").split("\n");
 			user.Name = folder;
 			user.Path = usersPath;
-			user.Url = ServerConfiguration.HostName;
+			user.Url = ServerConfiguration.BaseUrl;
 			user.Contents = RemoveEmptyLines(contents);
 			if (fs.existsSync(path.join(userFolder, 'log.csv'))){
 				var logs: string[] = fs.readFileSync(path.join(userFolder, 'log.csv'), "utf-8").split("\n");
