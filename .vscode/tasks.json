@@ -8,22 +8,29 @@
 		{
 			"taskName": "build",
 			"args": ["run", "build"],
-			"isBuildCommand": true,
-			"problemMatcher": {
+			"problemMatcher": [
+				{
+					"owner": "webpack",
+					"severity": "error",
+					"fileLocation": ["relative", "${workspaceRoot}/source"], 
+					"pattern": [
+						{
+							"regexp": "ERROR in (.*)",	
+							"file" : 1 
+						},
+						{
+							"regexp": "\\((\\d+),(\\d+)\\):(.*)",
+							"line":1,
+							"column": 2,
+							"message": 3
+						}
+					]
+				},
+				{
 				"owner": "webpack",
 				"severity": "error",
-				"fileLocation": ["relative", "${workspaceRoot}/source"], 
+				"fileLocation": ["relative", "${workspaceRoot}/"], 
 				"pattern": [
-					{
-						"regexp": "ERROR in (.*)",	
-						"file" : 1 
-					},
-					{
-						"regexp": "\\((\\d+),(\\d+)\\):(.*)",
-						"line":1,
-						"column": 2,
-						"message": 3
-					},
 					{
 						"regexp": "(.*)\\(([0-9]+),([0-9]+)\\): (error|warning) (TS[0-9][0-9][0-9][0-9]): (.*).",
 						"file": 1,
@@ -35,9 +42,11 @@
 					}
 				]
 			}
+			]
 		},
 		{
 			"taskName": "build-server",
+			"isBuildCommand": true,
 			"args": ["run", "build-server"],
 			"problemMatcher": {
 				"owner": "webpack",
@@ -45,7 +54,28 @@
 				"fileLocation": ["relative", "${workspaceRoot}/"], 
 				"pattern": [
 					{
-						"regexp": "(.*)\\(([0-9]+),([0-9]+)\\): (error|warning) (TS[0-9][0-9][0-9][0-9]): (.*).",
+						"regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(error|warning)\\s+(TS[0-9][0-9][0-9][0-9]):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"code": 5,
+						"message": 6
+					}
+				]
+			}
+		},
+		{
+			"taskName": "watch-server",
+			"args": ["run", "watch-server"],
+			"isWatching": true,
+			"problemMatcher": {
+				"owner": "webpack",
+				"severity": "error",
+				"fileLocation": ["relative", "${workspaceRoot}/"], 
+				"pattern": [
+					{
+						"regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(error|warning)\\s+(TS[0-9][0-9][0-9][0-9]):\\s+(.*)$",
 						"file": 1,
 						"line": 2,
 						"column": 3,
