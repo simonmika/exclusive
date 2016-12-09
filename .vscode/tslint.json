@@ -17,6 +17,20 @@
 		"array-type": [ false ]
 	},
 	"jsRules": {
+		"curly": false,
+		"semicolon": [ true, "never"],
+		"indent": [ true, "tabs" ],
+		"member-access": false,
+		"triple-equals": false,
+		"ordered-imports": [ false ],
+		"object-literal-sort-keys": false,
+		"no-console": [ false ],
+		"max-line-length": [ true, 320 ],
+		"arrow-parens": false,
+		"member-ordering": [ false ],
+		"one-line": [ false ],
+		"no-conditional-assignment": false,
+		"array-type": [ false ]
 	},
 	"rulesDirectory": [
 	]
