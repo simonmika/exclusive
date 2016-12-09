@@ -12,7 +12,7 @@
 			"problemMatcher": {
 				"owner": "webpack",
 				"severity": "error",
-				"fileLocation": "absolute", 
+				"fileLocation": ["relative", "${workspaceRoot}/source"], 
 				"pattern": [
 					{
 						"regexp": "ERROR in (.*)",	
@@ -23,7 +23,16 @@
 						"line":1,
 						"column": 2,
 						"message": 3
-					}			
+					},
+					{
+						"regexp": "(.*)\\(([0-9]+),([0-9]+)\\): (error|warning) (TS[0-9][0-9][0-9][0-9]): (.*).",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"code": 5,
+						"message": 6
+					}
 				]
 			}
 		},
@@ -33,18 +42,17 @@
 			"problemMatcher": {
 				"owner": "webpack",
 				"severity": "error",
-				"fileLocation": "absolute", 
+				"fileLocation": ["relative", "${workspaceRoot}/"], 
 				"pattern": [
 					{
-						"regexp": "ERROR in (.*)",	
-						"file" : 1 
-					},
-					{
-						"regexp": "\\((\\d+),(\\d+)\\):(.*)",
-						"line":1,
-						"column": 2,
-						"message": 3
-					}			
+						"regexp": "(.*)\\(([0-9]+),([0-9]+)\\): (error|warning) (TS[0-9][0-9][0-9][0-9]): (.*).",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"code": 5,
+						"message": 6
+					}
 				]
 			}
 		},
@@ -54,7 +62,7 @@
 			"problemMatcher": {
 				"owner": "webpack",
 				"severity": "error",
-				"fileLocation": "absolute", 
+				"fileLocation": ["relative", "${workspaceRoot}/source"], 
 				"pattern": [
 					{
 						"regexp": "ERROR in (.*)",	
