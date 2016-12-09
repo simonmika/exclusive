@@ -11,8 +11,8 @@ export default function inject(application: express.Application) {
 	if (development) {
 		console.log("Starting Webpack Dev Server.")
 		const compiler = webpack(WebpackConfiguration)
-		application.use(require('webpack-dev-middleware')(compiler, WebpackConfiguration.devServer))
-		application.use(require('webpack-hot-middleware')(compiler))
+		application.use(require("webpack-dev-middleware")(compiler, WebpackConfiguration.devServer))
+		application.use(require("webpack-hot-middleware")(compiler))
 	}
 	else {
 		application.use(/\/data\/app.*/, express.static("./data/client"))

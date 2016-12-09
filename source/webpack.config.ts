@@ -11,14 +11,14 @@ const config: webpack.Configuration = {
 		publicPath: "",
 		contentBase: "./build/client/",
 		stats: {
-			colors: true
+			colors: true,
 		},
 	},
 	context: __dirname,
 	entry: ["../source/client/App.ts"].concat(development ? [
-			"webpack-hot-middleware/client"
+			"webpack-hot-middleware/client",
 		] : [
-		]),	
+		]),
 	devtool: "#source-map",
 	resolve: {
 		extensions: ["*", ".webpack.js", ".web.js", ".ts", ".js"],
@@ -34,26 +34,26 @@ const config: webpack.Configuration = {
 		new ExtractTextPlugin("style-[contenthash:10].css"),
 	]).concat([
 		new HtmlWebpackPlugin({ template: "../source/client/index.html" }),
-		new webpack.DefinePlugin({development: JSON.stringify(development)})
+		new webpack.DefinePlugin({development: JSON.stringify(development)}),
 	]),
 	module: {
 		rules: [
 			{
 				test: /\.ts$/,
 				use: "ts-loader?configFileName=./tsconfig.json",
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.json$/,
 				use: "json-loader",
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.css$/,
 				use: development ?
 					[ "style-loader", "css-loader?localIdentName=[path][name]---[local]" ] :
 					ExtractTextPlugin.extract({ loader: "css-leader?minimize&localIdentName=[hash:base64:10]" }) ,
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 		],
 	},

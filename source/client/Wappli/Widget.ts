@@ -1,7 +1,6 @@
 export class Widget {
 	GetElement(): HTMLElement {
-		return null;
+		return null
 	}
-	Update(): void {
-	}
+	Update(): void {}
 }
