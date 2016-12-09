@@ -7,22 +7,22 @@ import { HttpPath } from "./HttpPath"
 import * as fs from "fs"
 import * as path from "path"
 
-export module DataStore {
-	export let Users: User[] = []
-	export let Content: string[] = []
-	let usersPath: string
-	let contentPath: string
-	export function Initiate(): void {
-		usersPath = path.join(ServerConfiguration.DataLocalPath, "users")
-		contentPath = path.join(ServerConfiguration.DataLocalPath, "content")
-		LoadContent()
-		LoadUsers()
+export class DataStore {
+	static Users: User[] = []
+	static Content: string[] = []
+	private static usersPath: string
+	private static contentPath: string
+	static Initiate() {
+		DataStore.usersPath = path.join(ServerConfiguration.DataLocalPath, "users")
+		DataStore.contentPath = path.join(ServerConfiguration.DataLocalPath, "content")
+		DataStore.LoadContent()
+		DataStore.LoadUsers()
 		console.log("Data Loaded.")
 	}
-	export function AddUser(user: User): void {
-		Users.push(user)
+	static AddUser(user: User): void {
+		DataStore.Users.push(user)
 	}
-	function RemoveEmptyLines(result: string[]): string[] {
+	private static RemoveEmptyLines(result: string[]): string[] {
 		let i = 0
 		while (i < result.length) {
 			if (result[i] == "" || result[i] == "\n") {
@@ -33,8 +33,8 @@ export module DataStore {
 		}
 		return result
 	}
-	function processLogs(logs: string[], user: BackendUser): Log[] {
-		let clearLogs = RemoveEmptyLines(logs)
+	private static processLogs(logs: string[], user: BackendUser): Log[] {
+		let clearLogs = DataStore.RemoveEmptyLines(logs)
 		let result: Log[] = []
 		clearLogs.forEach(log => {
 			const serperators = [",", ""]
@@ -43,36 +43,36 @@ export module DataStore {
 		})
 		return result
 	}
-	function LoadContent(): void {
-		Content = fs.readdirSync(contentPath).filter((folderName: string) => {
+	private static LoadContent(): void {
+		DataStore.Content = fs.readdirSync(DataStore.contentPath).filter((folderName: string) => {
 			return folderName[0] != "."
 		})
 	}
-	function LoadUsers(): void {
-		const folders: string[] = fs.readdirSync(usersPath).filter((folderName: string) => {
+	private static LoadUsers(): void {
+		const folders: string[] = fs.readdirSync(DataStore.usersPath).filter((folderName: string) => {
 			return folderName[0] != "."
 		})
 		folders.forEach(folder => {
-			const userFolder = path.join(usersPath, folder)
+			const userFolder = path.join(DataStore.usersPath, folder)
 			const meta = JSON.parse(fs.readFileSync(path.join(userFolder, "meta.json"), "utf-8"))
 			const user = new User((meta.company) || (meta.Company), (meta.contact) || (meta.Contact))
 			const contents: string[] = fs.readFileSync(path.join(userFolder, "content.csv"), "utf-8").split("\n")
 			user.Name = folder
-			user.Path = usersPath
+			user.Path = DataStore.usersPath
 			user.Url = ServerConfiguration.BaseUrl
-			user.Contents = RemoveEmptyLines(contents)
+			user.Contents = DataStore.RemoveEmptyLines(contents)
 			if (fs.existsSync(path.join(userFolder, "log.csv"))){
 				const logs: string[] = fs.readFileSync(path.join(userFolder, "log.csv"), "utf-8").split("\n")
-				user.Logs = processLogs(logs, user)
+				user.Logs = DataStore.processLogs(logs, user)
 			}
-			AddUser(user)
+			DataStore.AddUser(user)
 		})
 	}
-	export function OpenUser(name: string): User {
+	static OpenUser(name: string): User {
 		const BreakException = {}
 		let result: User
 		try {
-			Users.forEach(user => {
+			DataStore.Users.forEach(user => {
 				if (user.Name == name) {
 					result = user
 					throw BreakException
@@ -82,15 +82,15 @@ export module DataStore {
 		}
 		return result
 	}
-	export function AllUsers(): string[] {
+	static AllUsers(): string[] {
 		let result: string[] = []
-		Users.forEach(user => {
+		DataStore.Users.forEach(user => {
 			result.push(user.Name)
 		})
 		return result
 	}
-	export function UpdateUser(userName: string, log: Log): void {
-		const updatedUser = OpenUser(userName)
+	static UpdateUser(userName: string, log: Log): void {
+		const updatedUser = DataStore.OpenUser(userName)
 		updatedUser.Logs.push(log)
 	}
 }

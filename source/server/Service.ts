@@ -14,13 +14,13 @@ export class Service {
 	get Content() { return this.content }
 	private app: string
 	get App() { return this.app }
-	private global_log: string
-	get GlobalLog() { return this.global_log }
+	private globalLog: string
+	get GlobalLog() { return this.globalLog }
 	constructor() {
 		this.users = path.join(ServerConfiguration.DataLocalPath, "users")
 		this.content = path.join(ServerConfiguration.DataLocalPath, "content")
 		this.app = ServerConfiguration.AppPath
-		this.global_log = path.join(ServerConfiguration.DataLocalPath, "global_log")
+		this.globalLog = path.join(ServerConfiguration.DataLocalPath, "global_log")
 	}
 	Process(connection: Connection, urlPath: HttpPath) {
 		if (!urlPath || urlPath.Head.length <= 0) {
@@ -64,7 +64,7 @@ export class Service {
 					connection.Authenticate((authenticated: boolean) => {
 						if (authenticated) {
 							if (connection.Request.method == "GET") {
-								connection.WriteFile(path.join(this.global_log, "global_log.csv"))
+								connection.WriteFile(path.join(this.globalLog, "global_log.csv"))
 							}
 						}
 					})

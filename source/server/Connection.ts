@@ -129,8 +129,7 @@ export class Connection {
 					if ((jsonUser.folders) || (jsonUser.Folders)) {
 						let theFolders: string[]
 						(jsonUser.folders) ? theFolders = jsonUser.folders : theFolders = jsonUser.Folders
-						for (let i = 0; i < theFolders.length; i++)
-							contents.push(theFolders[i])
+						contents = contents.concat(theFolders)
 					}
 					result.Contents = contents
 					onCompleted(result)

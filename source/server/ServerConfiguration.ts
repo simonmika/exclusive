@@ -1,14 +1,14 @@
 import * as fs from "fs"
 import * as path from "path"
 
-export module ServerConfiguration {
-	export let BaseUrl: string
-	export let ListenPort: number
-	export let DataLocalPath: string
-	export let AppPath: string
-	export let AuthorisationServer: string
-	export let AuthorisationPath: string
-	export function ReadServerConfigurations(configFile: string): void {
+export class ServerConfiguration {
+	static BaseUrl: string
+	static ListenPort: number
+	static DataLocalPath: string
+	static AppPath: string
+	static AuthorisationServer: string
+	static AuthorisationPath: string
+	static ReadServerConfigurations(configFile: string): void {
 		let configuration: any
 		try {
 			configuration = JSON.parse(fs.readFileSync(configFile, "utf-8"))
