@@ -1,0 +1,17 @@
+{
+	"extends": "tslint:latest",
+	"rules": {
+		"curly": false,
+		"semicolon": [ true, "never"],
+		"indent": [ true, "tabs" ],
+		"member-access": false,
+		"triple-equals": false,
+		"ordered-imports": [ false ],
+		"object-literal-sort-keys": false,
+		"no-console": [ false ]
+	},
+	"jsRules": {
+	},
+	"rulesDirectory": [
+	]
+}
