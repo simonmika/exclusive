@@ -14,7 +14,8 @@
 		"member-ordering": [ false ],
 		"one-line": [ false ],
 		"no-conditional-assignment": false,
-		"array-type": [ false ]
+		"array-type": [ false ],
+		"no-empty": false
 	},
 	"jsRules": {
 		"curly": false,
@@ -30,7 +31,8 @@
 		"member-ordering": [ false ],
 		"one-line": [ false ],
 		"no-conditional-assignment": false,
-		"array-type": [ false ]
+		"array-type": [ false ],
+		"no-empty": false
 	},
 	"rulesDirectory": [
 	]

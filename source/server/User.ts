@@ -78,6 +78,7 @@ export class User extends BackendUser {
 			if (error)
 				onCompleted(false)
 			else {
+				// tslint:disable-next-line:no-shadowed-variable
 				fs.writeFile(path.join(this.path, "meta.json"), super.ToJSON()/*this.backend.ToJSON()*/, "utf-8", (error: any) => {
 					if (error)
 						onCompleted(false)

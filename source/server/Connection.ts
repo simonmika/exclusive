@@ -65,6 +65,7 @@ export class Connection {
 					onCompleted(301)
 			}
 			else {
+				// tslint:disable-next-line:no-shadowed-variable
 				fs.readFile(file, (error: any, data: any) => {
 					if (data) {
 						const contentType = Connection.ContentType(file)
