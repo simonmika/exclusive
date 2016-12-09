@@ -25,7 +25,8 @@
 		"start-server": "node build/server/Server.js",
 		"prestart": "npm run clean",
 		"start": "npm run start-server | npm run start-client",
-		"clean": "rm -rf build"
+		"clean": "rm -rf build",
+		"tslint": "tslint -c .vscode/tslint.json 'source/**/*.ts'"
 	},
 	"devDependencies": {
 		"@types/express": "^4.0.34",

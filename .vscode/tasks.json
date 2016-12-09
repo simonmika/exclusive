@@ -108,6 +108,22 @@
 			}
 		},
 		{
+			"taskName": "tslint",
+			"args": ["run", "tslint"],
+			"problemMatcher": {
+				"owner": "tslint",
+				"fileLocation": [ "relative", "${workspaceRoot}" ],
+				"severity": "warning",
+				"pattern": {
+					"regexp": "^(\\S.*)\\[(\\d+), (\\d+)\\]:\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"message": 4
+				}
+			}
+		},
+		{
 			"taskName": "start",
 			"args": ["run", "start"]
 		},
