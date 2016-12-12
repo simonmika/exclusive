@@ -1,6 +1,6 @@
 import { DataStore } from "./DataStore"
 import { User } from "./User"
-import { ServerConfiguration } from "./ServerConfiguration"
+import { Configuration } from "./Configuration"
 
 import * as fs from "fs"
 import * as http from "http"
@@ -15,7 +15,7 @@ export class Connection {
 	get Response() { return this.response }
 
 	private authorisation: any
-	constructor(private parsedUrl: url.Url, private request: http.IncomingMessage, private response: http.ServerResponse) {
+	constructor(private configuration: Configuration, private parsedUrl: url.Url, private request: http.IncomingMessage, private response: http.ServerResponse) {
 		this.requestUrl = parsedUrl.href
 		this.requestPath = parsedUrl.path
 		this.request = request
@@ -23,7 +23,7 @@ export class Connection {
 		this.authorisation = request.headers.authorization
 	}
 	CreateUrl(path?: string[]) {
-		return ServerConfiguration.BaseUrl + (path ? path.join("/") : "")
+		return this.configuration.url.href + "/" + (path ? path.join("/") : "")
 	}
 
 	Write(message: string, statusCode: number, headers: any) {
@@ -126,7 +126,7 @@ export class Connection {
 					let theContact: string
 					theCompany = jsonUser.company ? jsonUser.company : jsonUser.Company
 					theContact = jsonUser.contact ? jsonUser.contact : jsonUser.Contact
-					result = new User(theCompany, theContact)
+					result = new User(this.configuration, theCompany, theContact)
 					if ((jsonUser.folders) || (jsonUser.Folders)) {
 						let theFolders: string[]
 						(jsonUser.folders) ? theFolders = jsonUser.folders : theFolders = jsonUser.Folders
@@ -174,20 +174,8 @@ export class Connection {
 	private ParseBasicAuthorisation(basicAuthorisation: any): string[] {
 		return (new Buffer(basicAuthorisation, "base64")).toString().split(":")
 	}
-	private ValidateCredential(userName: string, password: string, callback: (result: boolean) => void) {
-		if (ServerConfiguration.AuthorisationServer && ServerConfiguration.AuthorisationServer != "") {
-			https.get({ hostname: ServerConfiguration.AuthorisationServer, path: ServerConfiguration.AuthorisationPath, auth: userName + ":" + password }, (response: http.IncomingMessage) => {
-				if (response.statusCode == 200)
-					callback(true)
-				else
-					callback(false)
-			}).on("error", (error: any) => {
-				console.log("There was an error when validating credentials.\n" + error.toString())
-				callback(false)
-			})
-		}
-		else // If no configuration is given, always authorize
-			callback(true)
+	private ValidateCredential(name: string, password: string, callback: (result: boolean) => void) {
+		this.configuration.authenticate({name, password}, callback)
 	}
 	private static ContentType(file: string): string {
 		const contentTypes = {".html": "text/html charset=utf8",

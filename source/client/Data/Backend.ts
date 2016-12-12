@@ -1,6 +1,8 @@
 import { IRoot } from "././IRoot"
 import { User } from "./User"
 import * as Wappli from "../Wappli"
+import { IConfiguration } from "../../common"
+import settings from "../../exclusive.config"
 
 export class Backend {
 	private service: Wappli.Service
@@ -16,7 +18,7 @@ export class Backend {
 	private globalLog: Wappli.Resource<IRoot>
 	get GlobalLog() { return this.globalLog }
 	constructor() {
-		this.service = new Wappli.Service("exclusive", () => {
+		this.service = new Wappli.Service("exclusive", { server: (settings as IConfiguration).url }, () => {
 			if (this.root !== undefined)
 				this.root.Invalidate()
 		})

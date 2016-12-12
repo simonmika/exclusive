@@ -1,15 +1,15 @@
-import { ServerConfiguration } from "./ServerConfiguration"
+import { Configuration } from "./Configuration"
 import { DataStore } from "./DataStore"
 import { Server } from "./Server"
+import settings from "../exclusive.config"
 
 export class Program {
 	private server: Server
 	constructor() {
-		const configFile = process.argv[2] ? process.argv[2] : __dirname + "/../config.json"
 		this.registerKeyEvents()
-		ServerConfiguration.ReadServerConfigurations(configFile)
-		DataStore.Initiate()
-		this.server = new Server(ServerConfiguration.ListenPort)
+		const configuration = new Configuration(settings)
+		DataStore.Initiate(configuration)
+		this.server = new Server(configuration)
 		this.server.start()
 	}
 	registerKeyEvents() {

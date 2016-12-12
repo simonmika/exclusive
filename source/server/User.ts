@@ -1,5 +1,5 @@
 import { HttpPath } from "./HttpPath"
-import { ServerConfiguration } from "./ServerConfiguration"
+import { Configuration } from "./Configuration"
 import { BackendUser } from "./BackendUser"
 import { Log } from "./Log"
 import { DataStore } from "./DataStore"
@@ -27,7 +27,7 @@ export class User extends BackendUser {
 	private contents: string[] = []
 	get Contents() { return this.contents }
 	set Contents(value: string[]) { this.contents = value }
-	constructor(company: string, contact: string) {
+	constructor(private configuration: Configuration, company: string, contact: string) {
 		super(company, contact)
 	}
 	AddLog(address: string, method: string, httpPath: HttpPath, statusCode: number, onCompleted: (result: boolean, log: Log) => void) {
@@ -40,7 +40,7 @@ export class User extends BackendUser {
 				onCompleted(true, log)
 		})
 		if (httpPath.Tail.Tail == null)
-			fs.appendFile(path.join(ServerConfiguration.DataLocalPath, "global_log", "global_log.csv"), log.toStringExtended() + "\n", "utf-8", (error: any) => {
+			fs.appendFile(path.join(this.configuration.usersFolder, "global_log", "global_log.csv"), log.toStringExtended() + "\n", "utf-8", (error: any) => {
 				if (error)
 					console.log("Error when saving global log: " + error.toString())
 			})

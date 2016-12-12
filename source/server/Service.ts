@@ -1,4 +1,4 @@
-import { ServerConfiguration } from "./ServerConfiguration"
+import { Configuration } from "./Configuration"
 import { DataStore } from "./DataStore"
 import { HttpPath } from "./HttpPath"
 import { Connection } from "./Connection"
@@ -8,19 +8,11 @@ import { Log } from "./Log"
 import * as path from "path"
 
 export class Service {
-	private users: string
-	get Users() { return this.content }
-	private content: string
-	get Content() { return this.content }
-	private app: string
-	get App() { return this.app }
-	private globalLog: string
-	get GlobalLog() { return this.globalLog }
-	constructor() {
-		this.users = path.join(ServerConfiguration.DataLocalPath, "users")
-		this.content = path.join(ServerConfiguration.DataLocalPath, "content")
-		this.app = ServerConfiguration.AppPath
-		this.globalLog = path.join(ServerConfiguration.DataLocalPath, "global_log")
+	get Users() { return this.configuration.usersFolder }
+	get Content() { return this.configuration.contentFolder }
+	get App() { return this.configuration.storage + "/app" }
+	get GlobalLog() { return this.configuration.storage + "/global_log.csv" }
+	constructor(private configuration: Configuration) {
 	}
 	Process(connection: Connection, urlPath: HttpPath) {
 		if (!urlPath || urlPath.Head.length <= 0) {
@@ -39,9 +31,9 @@ export class Service {
 			switch (urlPath.Head) {
 				case "app":
 					if (urlPath.Tail)
-						connection.WriteFile(path.join(this.app, urlPath.Tail.ToString()))
+						connection.WriteFile(path.join(this.App, urlPath.Tail.ToString()))
 					else
-						connection.WriteFile(this.app)
+						connection.WriteFile(this.App)
 					break
 				case "users":
 					connection.Authenticate((authenticated: boolean) => {
@@ -56,7 +48,7 @@ export class Service {
 								if (!urlPath.Tail)
 									connection.Write(Service.ToJSON(DataStore.Content), 200, { "Content-Type": "application/json; charset=UTF-8" })
 								else
-									connection.WriteFile(path.join(this.content, urlPath.Tail.ToString()))
+									connection.WriteFile(path.join(this.Content, urlPath.Tail.ToString()))
 						}
 					})
 					break
@@ -64,7 +56,7 @@ export class Service {
 					connection.Authenticate((authenticated: boolean) => {
 						if (authenticated) {
 							if (connection.Request.method == "GET") {
-								connection.WriteFile(path.join(this.globalLog, "global_log.csv"))
+								connection.WriteFile(path.join(this.GlobalLog, "global_log.csv"))
 							}
 						}
 					})
@@ -91,7 +83,7 @@ export class Service {
 						if (!newUser)
 							connection.Write("Bad Request", 400, { "Content-Type": "text/html; charset=utf-8" })
 						else {
-							newUser.Create(ServerConfiguration.BaseUrl, this.users, (created: boolean) => {
+							newUser.Create(this.configuration.url.href, this.Users.toString(), (created: boolean) => {
 								if (!created)
 									connection.Write("Internal Server Error", 500, { "Content-Type": "text/html; charset=utf-8" })
 								else
@@ -164,7 +156,7 @@ export class Service {
 
 				default:
 					if (user.CanRead(httpPath.Tail.Head))
-						connection.WriteFile(this.content + "/" + httpPath.Tail.ToString(), true, (statusCode: number) => {
+						connection.WriteFile(this.Content + "/" + httpPath.Tail.ToString(), true, (statusCode: number) => {
 							user.AddLog(address, connection.Request.method, httpPath, statusCode, (appended: boolean, message: Log) => {
 								if (appended)
 									DataStore.UpdateUser(user.Name, message)

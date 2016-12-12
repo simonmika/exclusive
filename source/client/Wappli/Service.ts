@@ -1,46 +1,41 @@
+export interface ISettings {
+	server: string
+	user?: string
+	password?: string
+}
+
 export class Service {
-	private server: string
-	get Server(): string { return this.server }
+	private settings: ISettings
+	get Server(): string { return this.settings.server }
 	set Server(value: string) {
-		this.server = value
+		this.settings.server = value
 	}
-	private user: string
-	get User(): string { return this.user }
+	get User(): string { return this.settings.user }
 	set User(value: string) {
-		this.user = value
+		this.settings.user = value
 		this.UpdateAuthorization()
 	}
-	private password: string
-	get Password(): string { return this.password }
+	get Password(): string { return this.settings.password }
 	set Password(value: string) {
-		this.password = value
+		this.settings.password = value
 		this.UpdateAuthorization()
 	}
 	private authorization: string
-	constructor(private name: string, private changed: () => void) {
+	constructor(private name: string, private defaultSettings: ISettings, private changed: () => void) {
 		this.LoadSettings()
 	}
 	private LoadSettings() {
-		const settings: { server: string; user: string; password: string } = JSON.parse(localStorage.getItem(this.name + ".settings"))
-		if (settings !== null) {
-			this.server = settings.server
-			this.user = settings.user
-			this.password = settings.password
-		} else {
-			this.server = "http://localhost:8080/data"
-			this.user = "user"
-			this.password = "password"
-		}
+		const settings: ISettings = JSON.parse(localStorage.getItem(this.name + ".settings"))
+		this.settings = settings ? settings : this.defaultSettings
 		this.UpdateAuthorization()
 		this.changed()
 	}
 	public SaveSettings() {
-		const settings = { server: this.server, user: this.user, password: this.password }
-		localStorage.setItem(this.name + ".settings", JSON.stringify(settings))
+		localStorage.setItem(this.name + ".settings", JSON.stringify(this.settings))
 		this.LoadSettings()
 	}
 	private UpdateAuthorization() {
-		this.authorization = "Basic " + btoa(this.user + ":" + this.password)
+		this.authorization = "Basic " + btoa(this.User + ":" + this.Password)
 	}
 	Get<T>(url: string, success: (data: T) => void) {
 		$.mobile.loading("show")
