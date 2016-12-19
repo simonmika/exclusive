@@ -1,28 +1,28 @@
-// Available variables which can be used inside of strings.
-// ${workspaceRoot}: the root folder of the team
-// ${file}: the current opened file
-// ${fileBasename}: the current opened file's basename
-// ${fileDirname}: the current opened file's dirname
-// ${fileExtname}: the current opened file's extension
-// ${cwd}: the current working directory of the spawned process
-
-// A task runner that calls the Typescript compiler (tsc) and
-// Compiles a HelloWorld.ts program
 {
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
 	"version": "0.1.0",
-	"command": "tsc",
+	"command": "npm",
 	"isShellCommand": true,
 	"showOutput": "always",
+	"suppressTaskName": true,
 	"tasks": [
 		{
-			"taskName": "build server",
-			"suppressTaskName": true,
-			"isBuildCommand": true,
-			"args": [
-				"-p",
-				"${workspaceRoot}/server"
-			],
-			"problemMatcher": "$tsc"
+			"taskName": "build",
+			"args": ["build"],
+			"isBuildCommand": true
+		},
+		{
+			"taskName": "install",
+			"args": ["install"]
+		},
+		{
+			"taskName": "update",
+			"args": ["update"]
+		},
+		{
+			"taskName": "test",
+			"args": ["run", "test"]
 		}
 	]
 }

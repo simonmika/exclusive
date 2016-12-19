@@ -1,0 +1,26 @@
+{
+	"name": "cogneco-exclusive",
+	"version": "1.0.0",
+	"description": "Webservice to share content exclusively.",
+	"main": "build/exclusive.js",
+	"scripts": {
+		"build": "tsc -p client && cp client/index.html build/app/ && tsc -p server",
+		"prestart": "npm run build",
+		"start": "node build/exclusive.js",
+		"debug": "cp -r --parents client/source build/app/ && npm start",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cogneco/exclusive.git"
+	},
+	"author": "Simon Mika, Molham Khalil, Jonathan Udd, Fredrik Bryntesson",
+	"license": "AGPL-3.0",
+	"bugs": {
+		"url": "https://github.com/cogneco/exclusive/issues"
+	},
+	"homepage": "https://github.com/cogneco/exclusive#readme",
+	"devDependencies": {
+		"typescript": "1.6"
+	}
+}
